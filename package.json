@@ -1,35 +1,47 @@
 {
+  "private": true,
   "name": "bibify",
-  "version": "1.0.0",
-  "description": "An open source, fast bibliography citer. No ads, no tricks; push the button to cite.",
-  "main": "index.js",
+  "version": "0.0.0",
+  "license": "MIT",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "per-env",
+    "start:production": "npm run -s serve",
+    "start:development": "npm run -s dev",
+    "build": "preact build",
+    "serve": "preact build && serve build --single",
+    "dev": "preact watch",
+    "lint": "eslint src",
+    "test": "jest"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://gitlab.com/bbworld1/bibify.git"
+  "eslintConfig": {
+    "extends": "eslint-config-synacor"
   },
-  "keywords": [
-    "citation",
-    "citer",
-    "bibliography"
+  "eslintIgnore": [
+    "build/*"
   ],
-  "author": "Vincent Wang",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://gitlab.com/bbworld1/bibify/issues"
+  "devDependencies": {
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-preact-pure": "^2.0.0",
+    "eslint": "^6.0.1",
+    "eslint-config-synacor": "^3.0.4",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^24.9.0",
+    "jest-preset-preact": "^1.0.0",
+    "per-env": "^1.0.2",
+    "preact-cli": "^3.0.0-rc.6",
+    "preact-render-spy": "^1.2.1",
+    "serve": "^11.1.0"
   },
-  "homepage": "https://gitlab.com/bbworld1/bibify#readme",
   "dependencies": {
-    "got": "^10.0.4",
-    "metascraper": "^5.8.9",
-    "metascraper-author": "^5.8.7",
-    "metascraper-date": "^5.8.7",
-    "metascraper-description": "^5.8.7",
-    "metascraper-clearbit": "^5.8.7",
-    "metascraper-publisher": "^5.8.7",
-    "metascraper-title": "^5.8.7",
-    "metascraper-url": "^5.8.7"
+    "preact": "^10.0.1",
+    "preact-render-to-string": "^5.1.0",
+    "preact-router": "^3.0.0"
+  },
+  "jest": {
+    "preset": "jest-preset-preact",
+    "setupFiles": [
+      "<rootDir>/tests/__mocks__/browserMocks.js",
+      "<rootDir>/tests/__mocks__/setupTests.js"
+    ]
   }
 }
