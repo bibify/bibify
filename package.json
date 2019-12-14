@@ -33,7 +33,10 @@
     "serve": "^11.1.0"
   },
   "dependencies": {
+    "@material-ui/core": "^4.7.2",
+    "metascraper": "^5.8.10",
     "preact": "^10.0.1",
+    "preact-head": "^1.0.3",
     "preact-render-to-string": "^5.1.0",
     "preact-router": "^3.0.0"
   },

@@ -1,16 +1,37 @@
-import { h } from 'preact';
+import { h, Component } from 'preact';
 import { Link } from 'preact-router/match';
-import style from './style.css';
+import { Tab, Tabs } from '@material-ui/core';
 
-const Header = () => (
-	<header class={style.header}>
-		<h1>Preact App</h1>
-		<nav>
-			<Link activeClassName={style.active} href="/">Home</Link>
-			<Link activeClassName={style.active} href="/profile">Me</Link>
-			<Link activeClassName={style.active} href="/profile/john">John</Link>
-		</nav>
-	</header>
-);
+export default class Header extends Component {
+  state = {
+    value: 0
+  }
 
-export default Header;
+  handleChange = (event, value) => {
+    this.setState({ value });
+    this.props.callback(value);
+  };
+
+  getValue() {
+    return this.state.value;
+  }
+
+  render() {
+    return (
+      <Tabs
+        centered
+        value={this.state.value}
+        onChange={this.handleChange}
+        variant="fullWidth"
+        indicatorColor="primary"
+        textColor="primary"
+        aria-label="cite-options"
+      >
+        <Tab label="Book" />
+        <Tab label="Website" />
+        <Tab label="Journal" />
+        <Tab label="Report" />
+      </Tabs>
+    )
+  }
+}
