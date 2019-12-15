@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.7.2",
+    "@material-ui/icons": "^4.5.1",
     "metascraper": "^5.8.10",
     "preact": "^10.0.1",
     "preact-head": "^1.0.3",
