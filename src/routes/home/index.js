@@ -1,19 +1,54 @@
 import { h, Component } from 'preact';
 import style from './style';
 import SearchBar from '../../components/searchbar';
+import Author from '../../components/author';
+import AddAuthor from '../../components/add-author';
 
 import { Button, IconButton, TextField } from '@material-ui/core';
+import { FormLabel, FormGroup, Divider } from '@material-ui/core';
 import { Box, Grid } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import { Card, CardContent, CardActions } from '@material-ui/core';
 import { SvgIcon } from '@material-ui/core';
 
+import { RemoveCircle } from '@material-ui/icons';
+
 export default class Home extends Component {
+  state = {
+    authors: [
+      {firstName: "Adolf", lastName: "Hitler"}
+    ],
+  }
+
+  addAuthor = (nameFirst, nameLast) => {
+    console.log("received addAuthor");
+    const authors_cp = this.state.authors;
+    authors_cp.push({firstName: nameFirst, lastName: nameLast});
+    this.setState({authors: authors_cp});
+  }
+
+  removeAuthor = (index) => {
+    const authors_cp = this.state.authors;
+    authors_cp.splice(index, 1);
+    this.setState({authors: authors_cp});
+  }
+
 	render() {
     // NOTE: We will have to change this later maybe
     // TODO: find a way to not hardcode it
     let list_of_tabs = ["Book", "Website", "Journal", "Report"];
     let list_of_mediums = ["book title", "URL", "journal title", "report title"];
+
+    let author_components = [];
+    for (let [index, author] of this.state.authors.entries()) {
+      author_components.push(<Author
+        index={index}
+        firstName={author.firstName}
+        lastName={author.lastName}
+        onRemove={this.removeAuthor}
+      />);
+    }
+
 		return (
       <div id="home" class={style.home}>
         <Grid container direction="row" justify="center">
@@ -33,7 +68,7 @@ export default class Home extends Component {
             <br />
             <Card className={style.citecard}>
               <CardContent>
-                <Typography variant="body" color="textPrimary">Something something. Wikipedia. 2019 December 30</Typography>
+                <Typography variant="body1" color="textPrimary">Something something. Wikipedia. 2019 December 30</Typography>
               </CardContent>
               <CardActions>
                 <IconButton>
@@ -45,12 +80,45 @@ export default class Home extends Component {
                 </IconButton>
               </CardActions>
             </Card>
-            <form>
-              <TextField id="title" label="Title" />
-              <Grid container direction="row">
-                <TextField id="author" label="Author(s)" />
-                <TextField id="publisher" label="Publisher(s)" />
-              </Grid>
+            <br />
+            <form className={style.citecard}>
+              <h3 style="margin-bottom: 0.25em;">Website</h3>
+              <Divider />
+              <br />
+              <TextField
+                className={style.sanemargin}
+                fullWidth
+                margin="dense"
+                variant="outlined"
+                id="Title"
+                label="Title" />
+              <TextField
+                className={style.sanemargin}
+                fullWidth
+                margin="dense"
+                variant="outlined"
+                id="site"
+                label="Website Name" />
+              <TextField
+                className={style.sanemargin}
+                fullWidth
+                margin="dense"
+                variant="outlined"
+                id="publisher"
+                label="Publisher" />
+              <TextField
+                className={style.sanemargin}
+                fullWidth
+                margin="dense"
+                variant="outlined"
+                id="url"
+                label="URL" />
+              <br />
+              <h3 style="margin-bottom: 0.25em;">Authors</h3>
+              <Divider />
+              <br />
+              {author_components}
+              <AddAuthor onAdd={this.addAuthor} />
             </form>
           </Grid>
         </Grid>

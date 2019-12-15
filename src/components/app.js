@@ -7,7 +7,6 @@ import Header from './header';
 
 // Code-splitting is automated for routes
 import Home from '../routes/home';
-import Profile from '../routes/profile';
 
 export default class App extends Component {
 
@@ -61,8 +60,6 @@ export default class App extends Component {
 				<Header callback={this.navCallback} />
 				<Router onChange={this.handleRoute}>
 					<Home path="/" navValue={this.state.value} />
-					<Profile path="/profile/" user="me" navValue={this.state.value} />
-					<Profile path="/profile/:user" navValue={this.state.value} />
 				</Router>
 			</div>
 		);
