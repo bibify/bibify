@@ -3,6 +3,7 @@ import style from './style';
 import SearchBar from '../../components/searchbar';
 import Author from '../../components/author';
 import AddAuthor from '../../components/add-author';
+import WebsiteInfo from '../../components/websiteinfo';
 
 import { Button, IconButton, TextField } from '@material-ui/core';
 import { FormLabel, FormGroup, Divider } from '@material-ui/core';
@@ -18,6 +19,11 @@ export default class Home extends Component {
     authors: [
       {firstName: "Adolf", lastName: "Hitler"}
     ],
+  }
+
+  onInfoChange = (info) => {
+    this.setState({srcInfo: info})
+    console.log(this.state);
   }
 
   addAuthor = (nameFirst, nameLast) => {
@@ -82,38 +88,7 @@ export default class Home extends Component {
             </Card>
             <br />
             <form className={style.citecard}>
-              <h3 style="margin-bottom: 0.25em;">Website</h3>
-              <Divider />
-              <br />
-              <TextField
-                className={style.sanemargin}
-                fullWidth
-                margin="dense"
-                variant="outlined"
-                id="Title"
-                label="Title" />
-              <TextField
-                className={style.sanemargin}
-                fullWidth
-                margin="dense"
-                variant="outlined"
-                id="site"
-                label="Website Name" />
-              <TextField
-                className={style.sanemargin}
-                fullWidth
-                margin="dense"
-                variant="outlined"
-                id="publisher"
-                label="Publisher" />
-              <TextField
-                className={style.sanemargin}
-                fullWidth
-                margin="dense"
-                variant="outlined"
-                id="url"
-                label="URL" />
-              <br />
+              <WebsiteInfo onStateChange={this.onInfoChange} />
               <h3 style="margin-bottom: 0.25em;">Authors</h3>
               <Divider />
               <br />

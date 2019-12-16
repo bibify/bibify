@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import { Link } from 'preact-router/match';
-import { Tab, Tabs } from '@material-ui/core';
+import { Tab, Tabs, Select } from '@material-ui/core';
 
 export default class Header extends Component {
   state = {
@@ -30,7 +30,7 @@ export default class Header extends Component {
         <Tab label="Book" />
         <Tab label="Website" />
         <Tab label="Journal" />
-        <Tab label="Report" />
+        <Tab label="Article" />
       </Tabs>
     )
   }
