@@ -4,12 +4,15 @@ import { Tab, Tabs, Select } from '@material-ui/core';
 
 export default class Header extends Component {
   state = {
-    value: 0
+    value: 0,
+    tabName: "Book"
   }
 
+  tabs = ["Book", "Website", "Journal", "Article"];
+
   handleChange = (event, value) => {
-    this.setState({ value });
-    this.props.callback(value);
+    this.setState({value: value, tabName: this.tabs[value]});
+    this.props.onTabChange(this.state.value, this.state.tabName);
   };
 
   getValue() {
@@ -17,6 +20,11 @@ export default class Header extends Component {
   }
 
   render() {
+    let tab_components = [];
+    for (let tab of this.tabs) {
+      tab_components.push(<Tab label={tab} />);
+    }
+
     return (
       <Tabs
         centered
@@ -26,11 +34,9 @@ export default class Header extends Component {
         indicatorColor="primary"
         textColor="primary"
         aria-label="cite-options"
+        className={this.props.className}
       >
-        <Tab label="Book" />
-        <Tab label="Website" />
-        <Tab label="Journal" />
-        <Tab label="Article" />
+        {tab_components}
       </Tabs>
     )
   }

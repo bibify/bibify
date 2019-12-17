@@ -4,6 +4,8 @@ import SearchBar from '../../components/searchbar';
 import Author from '../../components/author';
 import AddAuthor from '../../components/add-author';
 import WebsiteInfo from '../../components/websiteinfo';
+import Header from '../../components/header';
+import CiteCard from '../../components/citecard';
 
 import { Button, IconButton, TextField } from '@material-ui/core';
 import { FormLabel, FormGroup, Divider } from '@material-ui/core';
@@ -20,6 +22,16 @@ export default class Home extends Component {
       {firstName: "Adolf", lastName: "Hitler"}
     ],
   }
+
+  /** Gets fired when we change tabs.
+   ** Will automatically pass on this information to components.
+   * @param {int} value - the new value of the tab.
+   * @param {int} tabName - the name of the new tab.
+   */
+  navCallback = (value, tabName) => {
+    this.setState({headerData: { value: value, tabName: tabName }});
+    console.log("claba");
+  };
 
   onInfoChange = (info) => {
     this.setState({srcInfo: info})
@@ -57,6 +69,7 @@ export default class Home extends Component {
 
 		return (
       <div id="home" class={style.home}>
+				<Header onTabChange={this.navCallback} className={style.headerbar}/>
         <Grid container direction="row" justify="center">
           <Grid
             item
@@ -72,20 +85,7 @@ export default class Home extends Component {
             <h1>Bibify - Cite {list_of_tabs[this.props.navValue]} in MLA Format</h1>
             <SearchBar />
             <br />
-            <Card className={style.citecard}>
-              <CardContent>
-                <Typography variant="body1" color="textPrimary">Something something. Wikipedia. 2019 December 30</Typography>
-              </CardContent>
-              <CardActions>
-                <IconButton>
-                  <SvgIcon fontSize="small">
-                    <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                      <path fill="#000000" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" />
-                    </svg>
-                  </SvgIcon>
-                </IconButton>
-              </CardActions>
-            </Card>
+            <CiteCard text="something something" />
             <br />
             <form className={style.citecard}>
               <WebsiteInfo onStateChange={this.onInfoChange} />

@@ -3,7 +3,6 @@ import { Router } from 'preact-router';
 
 import { lazily, cancelLazily } from '../../lib/lazily';
 
-import Header from './header';
 
 // Code-splitting is automated for routes
 import Home from '../routes/home';
@@ -15,22 +14,12 @@ export default class App extends Component {
 	 *	@param {string} event.url	The newly routed URL
 	 */
   state = {
-    value: 0
+    headerData: { value: 0, tabName: "Book" }
   }
 
 	handleRoute = e => {
 		this.currentUrl = e.url;
 	};
-
-
-  /** Gets fired when we change tabs.
-   ** Will automatically pass on this information to components.
-   * @param {int} value - the new value of the tab.
-   */
-  navCallback = (v) => {
-    this.setState({ value: v });
-    console.log("claba");
-  };
 
   //load = () => {
   //  stylesheets = ["https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap",
@@ -57,9 +46,8 @@ export default class App extends Component {
 	render() {
 		return (
 			<div id="app">
-				<Header callback={this.navCallback} />
 				<Router onChange={this.handleRoute}>
-					<Home path="/" navValue={this.state.value} />
+					<Home path="/" />
 				</Router>
 			</div>
 		);
