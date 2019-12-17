@@ -15,7 +15,7 @@ export default class BaseCiteCard extends Component {
   styles = ["MLA", "APA"];
 
   handleStyleChange = (e, v) => {
-    this.setState({styleIndex: v, styleName: styles[v]});
+    this.setState({styleIndex: v, styleName: this.styles[v]});
     console.log(this.state.styleIndex);
     this.props.onStyleChange(this.styleIndex, this.styleName);
   }
@@ -34,7 +34,7 @@ export default class BaseCiteCard extends Component {
               </svg>
             </SvgIcon>
           </IconButton>
-          <Tabs value={this.state.styleIndex} onchange={this.handleStyleChange}>
+          <Tabs value={this.state.styleIndex} onChange={this.handleStyleChange}>
             <Tab value={0} label="MLA" />
             <Tab value={1} label="APA" />
           </Tabs>
