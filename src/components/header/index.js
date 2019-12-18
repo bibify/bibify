@@ -11,7 +11,7 @@ export default class Header extends Component {
     tabName: "Book",
     overflowTab: {
       name: "Other...",
-      tabValue: 0
+      tabValue: -1
     },
     expanded: false
   }
@@ -34,8 +34,22 @@ export default class Header extends Component {
 
   handleChange = (event, value) => {
     if (value == 3) {
-      this.setState({tabValue: 3, expanded: !this.state.expanded});
-      this.props.onTabChange(value, this.state.tabName);
+      console.log(this.state.overflowTab);
+      if (this.state.overflowTab.tabValue < 0) {
+        this.setState({
+          tabValue: 3,
+          expanded: !this.state.expanded
+        });
+        this.props.onTabChange(value, this.state.tabName);
+      } else {
+        this.setState({
+          value: this.state.overflowTab.tabValue,
+          tabName: this.state.overflowTab.tabName,
+          tabValue: 3,
+          expanded: !this.state.expanded
+        });
+        this.props.onTabChange(value, this.state.overflowTab.name);
+      }
     } else if (value < 3) {
       this.setState({expanded: false});
       this.setState({value: value, tabValue: value, tabName: this.tabs[value]});
@@ -53,7 +67,7 @@ export default class Header extends Component {
       value: index,
       overflowTab: {
         name: name,
-        value: index,
+        tabValue: index,
       }
     });
 
