@@ -1,0 +1,18 @@
+.background {
+  background-color: #EEEEEE;
+  margin-bottom: 5em;
+  width: 100%;
+}
+
+.shorten {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.colum {
+  height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

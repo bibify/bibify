@@ -7,17 +7,15 @@ import WebsiteInfo from '../../components/websiteinfo';
 import Header from '../../components/header';
 import CiteCard from '../../components/citecard';
 
-import { Button, IconButton, TextField } from '@material-ui/core';
-import { FormLabel, FormGroup, Divider } from '@material-ui/core';
-import { Box, Grid } from '@material-ui/core';
-import { Typography } from '@material-ui/core';
-import { Card, CardContent, CardActions } from '@material-ui/core';
-import { SvgIcon } from '@material-ui/core';
-
-import { RemoveCircle } from '@material-ui/icons';
+import { Divider } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 export default class Home extends Component {
   state = {
+    headerData: {
+      value: 0,
+      tabName: "Book"
+    },
     authors: [
       {firstName: "Adolf", lastName: "Hitler"}
     ],
@@ -52,11 +50,6 @@ export default class Home extends Component {
   }
 
 	render() {
-    // NOTE: We will have to change this later maybe
-    // TODO: find a way to not hardcode it
-    let list_of_tabs = ["Book", "Website", "Journal", "Report"];
-    let list_of_mediums = ["book title", "URL", "journal title", "report title"];
-
     let author_components = [];
     for (let [index, author] of this.state.authors.entries()) {
       author_components.push(<Author
@@ -69,7 +62,7 @@ export default class Home extends Component {
 
 		return (
       <div id="home" class={style.home}>
-				<Header onTabChange={this.navCallback} className={style.headerbar}/>
+				<Header onTabChange={this.navCallback} />
         <Grid container direction="row" justify="center">
           <Grid
             item
@@ -82,7 +75,7 @@ export default class Home extends Component {
             md={9}
             sm={12}
           >
-            <h1>Bibify - Cite {list_of_tabs[this.props.navValue]} in MLA Format</h1>
+            <h1>Bibify - Cite {this.state.headerData.tabName} in MLA Format</h1>
             <SearchBar />
             <br />
             <CiteCard text="something something" />
