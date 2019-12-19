@@ -6,6 +6,26 @@ import { Search } from '@material-ui/icons';
 import style from './style';
 
 export default class SearchBar extends Component {
+  getResults = () => {
+    console.log("Getting results");
+    let results = [
+      {
+        title: "The Manifesto of the Communist Party",
+        author: "Karl Marx & Frederich Engels",
+        date: 1889,
+        publisher: "The International League of Communists yeeeeeeet",
+      },
+      {
+        title: "Das Kapital",
+        author: "Karl Marx",
+        date: 1918,
+        publisher: "The First Communist International",
+      }
+    ];
+
+    this.props.onResults(results);
+  }
+
   render() {
     return(
       <Box display="flex" flexDirection="row" width="100%">
@@ -18,7 +38,14 @@ export default class SearchBar extends Component {
           />
         </Box>
         <Box ml="-5px">
-          <Button className={style.fullbtn} variant="contained" edge="start" color="primary" disableElevation>
+          <Button
+            className={style.fullbtn}
+            variant="contained"
+            edge="start"
+            color="primary"
+            disableElevation
+            onClick={this.getResults}
+          >
             <Search />
           </Button>
         </Box>

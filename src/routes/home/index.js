@@ -6,8 +6,9 @@ import AddAuthor from '../../components/add-author';
 import WebsiteInfo from '../../components/websiteinfo';
 import Header from '../../components/header';
 import CiteCard from '../../components/citecard';
+import ResultCard from '../../components/resultcard';
 
-import { Divider } from '@material-ui/core';
+import { Divider, Collapse } from '@material-ui/core';
 import { Grid } from '@material-ui/core';
 
 export default class Home extends Component {
@@ -19,6 +20,9 @@ export default class Home extends Component {
     authors: [
       {firstName: "Adolf", lastName: "Hitler"}
     ],
+    showResults: false,
+    results: [
+    ]
   }
 
   /** Gets fired when we change tabs.
@@ -34,6 +38,11 @@ export default class Home extends Component {
   onInfoChange = (info) => {
     this.setState({srcInfo: info})
     console.log(this.state);
+  }
+
+  onResults = (results) => {
+    console.log("res", results);
+    this.setState({showResults: true, results: results});
   }
 
   addAuthor = (nameFirst, nameLast) => {
@@ -76,7 +85,13 @@ export default class Home extends Component {
             sm={12}
           >
             <h1>Bibify - Cite {this.state.headerData.tabName} in MLA Format</h1>
-            <SearchBar />
+            <SearchBar onResults={this.onResults} />
+            <br />
+            <Collapse in={this.state.showResults} className={style.citecard}>
+              <ResultCard
+                results={this.state.results}
+              />
+            </Collapse>
             <br />
             <CiteCard text="something something" />
             <br />
