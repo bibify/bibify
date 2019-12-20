@@ -14,6 +14,7 @@ export default class ResultCard extends Component {
     open: false,
     currentItemIndex: 0,
     currentItem: {
+      thumbnail: "/picture.jpeg",
       title: "",
       author: "",
       date: 0,
@@ -47,6 +48,10 @@ export default class ResultCard extends Component {
 
   render() {
     this.results = this.props.results;
+    for (let result = 0; result < this.results.length; ++result) {
+      if (this.results[result].thumbnail == null) this.results[result].thumbnail = "/picture.jpeg";
+    }
+
     if (this.state.currentItem.title == "" && this.results.length > 0) {
       this.setState({currentItem: this.results[0]});
     }
@@ -78,13 +83,13 @@ export default class ResultCard extends Component {
         <CardContent>
           <Box display="flex" flexDirection="row" alignItems="center">
             <Avatar
-              src="/picture.jpeg"
+              src={this.state.currentItem.thumbnail}
               variant="rounded"
               className={thumbstyle.thumb}
             />
             <Box display="flex" flexDirection="column" paddingLeft="1em;" >
               <Typography variant="h5">{this.state.currentItem.title}</Typography>
-              <Typography variant="subtitle1" >
+              <Typography variant="subtitle1" className={style.smallspace}>
                 {this.state.currentItem.author}, {this.state.currentItem.date} &middot;&nbsp;
                 {this.state.currentItem.publisher}
               </Typography>

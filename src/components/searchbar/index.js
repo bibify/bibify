@@ -3,6 +3,8 @@ import { Button } from '@material-ui/core';
 import { Box } from '@material-ui/core';
 import { TextField } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
+
+//import { MetaProvider } from './providers';
 import style from './style';
 
 export default class SearchBar extends Component {
@@ -22,6 +24,17 @@ export default class SearchBar extends Component {
         publisher: "The First Communist International",
       }
     ];
+
+    (async () => {
+      try {
+        const response = await got('https://sindresorhus.com');
+        console.log(response.body);
+        //=> '<!doctype html> ...'
+      } catch (error) {
+        console.log(error.response.body);
+        //=> 'Internal server error ...'
+      }
+    })();
 
     this.props.onResults(results);
   }
