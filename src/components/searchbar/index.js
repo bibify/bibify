@@ -4,39 +4,27 @@ import { Box } from '@material-ui/core';
 import { TextField } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 
-//import { MetaProvider } from './providers';
 import style from './style';
+import * as search from './search';
 
 export default class SearchBar extends Component {
-  getResults = () => {
+  state = {
+    query: ""
+  }
+
+  getResults = async () => {
     console.log("Getting results");
-    let results = [
-      {
-        title: "The Manifesto of the Communist Party",
-        author: "Karl Marx & Frederich Engels",
-        date: 1889,
-        publisher: "The International League of Communists yeeeeeeet",
-      },
-      {
-        title: "Das Kapital",
-        author: "Karl Marx",
-        date: 1918,
-        publisher: "The First Communist International",
-      }
-    ];
+    search.searchBook(this.state.query)
+      .then((results) => {
+        this.props.onResults(results);
+      })
+      .catch((error) => {
+        console.log("Error was", error);
+      });
+  }
 
-    (async () => {
-      try {
-        const response = await got('https://sindresorhus.com');
-        console.log(response.body);
-        //=> '<!doctype html> ...'
-      } catch (error) {
-        console.log(error.response.body);
-        //=> 'Internal server error ...'
-      }
-    })();
-
-    this.props.onResults(results);
+  onQueryChange = (e) => {
+    this.setState({query: e.target.value});
   }
 
   render() {
@@ -48,6 +36,8 @@ export default class SearchBar extends Component {
             fullWidth
             type="search"
             label="Enter a book/journal/report/URL to autofill..."
+            value={this.state.query}
+            onChange={this.onQueryChange}
           />
         </Box>
         <Box ml="-5px">

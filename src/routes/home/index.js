@@ -18,7 +18,6 @@ export default class Home extends Component {
       tabName: "Book"
     },
     authors: [
-      {firstName: "Adolf", lastName: "Hitler"}
     ],
     showResults: false,
     results: [

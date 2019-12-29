@@ -16,7 +16,7 @@ export default class ResultCard extends Component {
     currentItem: {
       thumbnail: "/picture.jpeg",
       title: "",
-      author: "",
+      authors_formatted: "",
       date: 0,
       publisher: ""
     }
@@ -47,7 +47,19 @@ export default class ResultCard extends Component {
   }
 
   render() {
-    this.results = this.props.results;
+    if (this.results != this.props.results) {
+      this.results = this.props.results;
+      this.setState({
+        currentItem: {
+          thumbnail: "/picture.jpeg",
+          title: "",
+          authors_formatted: "",
+          date: 0,
+          publisher: ""
+        }
+      })
+    }
+
     for (let result = 0; result < this.results.length; ++result) {
       if (this.results[result].thumbnail == null) this.results[result].thumbnail = "/picture.jpeg";
     }
@@ -66,7 +78,7 @@ export default class ResultCard extends Component {
         <ListItem button onClick={() => this.changeCurrentItem(i)}>
           <ListItemText
             primary={this.results[i].title}
-            secondary={`${this.results[i].author}, ${this.results[i].date} \u00B7 ${this.results[i].publisher}`}
+            secondary={`${this.results[i].authors_formatted}, ${this.results[i].date} \u00B7 ${this.results[i].publisher}`}
           />
         </ListItem>
       );
@@ -90,7 +102,7 @@ export default class ResultCard extends Component {
             <Box display="flex" flexDirection="column" paddingLeft="1em;" >
               <Typography variant="h5">{this.state.currentItem.title}</Typography>
               <Typography variant="subtitle1" className={style.smallspace}>
-                {this.state.currentItem.author}, {this.state.currentItem.date} &middot;&nbsp;
+                {this.state.currentItem.authors_formatted}, {this.state.currentItem.date} &middot;&nbsp;
                 {this.state.currentItem.publisher}
               </Typography>
               {showMoreResults}
