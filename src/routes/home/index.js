@@ -92,7 +92,7 @@ export default class Home extends Component {
               />
             </Collapse>
             <br />
-            <CiteCard text="something something" />
+            <CiteCard text="Your citation will appear here..." />
             <br />
             <form className={style.citecard}>
               <WebsiteInfo onStateChange={this.onInfoChange} />
