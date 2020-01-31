@@ -9,6 +9,7 @@ export default class Header extends Component {
     value: 0,
     tabValue: 0,
     tabName: "Book",
+    supported: true,
     overflowTab: {
       name: "Other...",
       tabValue: -1
@@ -32,6 +33,11 @@ export default class Header extends Component {
     "Podcast",
   ];
 
+  supportedSources = [
+    "Book",
+    "Website"
+  ]
+
   handleChange = (event, value) => {
     if (value == 3) {
       console.log(this.state.overflowTab);
@@ -40,7 +46,8 @@ export default class Header extends Component {
           tabValue: 3,
           expanded: !this.state.expanded
         });
-        this.props.onTabChange(value, this.state.tabName);
+        let supported = this.supportedSources.indexOf(this.tabs[value]);
+        this.props.onTabChange(value, this.state.tabName, supported != -1);
       } else {
         this.setState({
           value: this.state.overflowTab.tabValue,
@@ -48,16 +55,18 @@ export default class Header extends Component {
           tabValue: 3,
           expanded: !this.state.expanded
         });
-        this.props.onTabChange(value, this.state.overflowTab.name);
+        let supported = this.supportedSources.indexOf(this.tabs[value]);
+        this.props.onTabChange(value, this.state.overflowTab.name, supported != -1 && supported != null);
       }
     } else if (value < 3) {
       this.setState({expanded: false});
       this.setState({value: value, tabValue: value, tabName: this.tabs[value]});
-      this.props.onTabChange(value, this.tabs[value]);
+      let supported = this.supportedSources.indexOf(this.tabs[value]);
+      this.props.onTabChange(value, this.tabs[value], supported != -1);
     } else {
-      console.log(value);
       this.setState({value: value, tabValue: 3});
-      this.props.onTabChange(value, this.tabs[value]);
+      let supported = this.supportedSources.indexOf(this.tabs[value]);
+      this.props.onTabChange(value, this.tabs[value], supported != -1);
     }
   };
 

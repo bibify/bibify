@@ -15,7 +15,8 @@ export default class Home extends Component {
   state = {
     headerData: {
       value: 0,
-      tabName: "Book"
+      tabName: "Book",
+      supported: true
     },
     authors: [
     ],
@@ -28,9 +29,10 @@ export default class Home extends Component {
    ** Will automatically pass on this information to components.
    * @param {int} value - the new value of the tab.
    * @param {int} tabName - the name of the new tab.
+   * @param {boolean} supported - whether the new tab citation style can be searched for.
    */
-  navCallback = (value, tabName) => {
-    this.setState({headerData: { value: value, tabName: tabName }});
+  navCallback = (value, tabName, supported) => {
+    this.setState({headerData: { value: value, tabName: tabName, supported: supported }});
     console.log("claba");
   };
 
@@ -84,7 +86,9 @@ export default class Home extends Component {
             sm={12}
           >
             <h1>Bibify - Cite {this.state.headerData.tabName} in MLA Format</h1>
-            <SearchBar onResults={this.onResults} />
+            <Collapse in={this.state.headerData.supported} className={style.citecard}>
+              <SearchBar onResults={this.onResults} />
+            </Collapse>
             <br />
             <Collapse in={this.state.showResults} className={style.citecard}>
               <ResultCard
@@ -108,15 +112,3 @@ export default class Home extends Component {
 		);
 	}
 }
-
-// import { h } from 'preact';
-// import style from './style';
-//
-// const Home = () => (
-// 	<div class={style.home}>
-// 		<h1>Home</h1>
-// 		<p>This is the Home component.</p>
-// 	</div>
-// );
-//
-// export default Home;
