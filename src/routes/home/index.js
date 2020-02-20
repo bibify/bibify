@@ -1,9 +1,10 @@
 import { h, Component } from 'preact';
+
 import style from './style';
 import SearchBar from '../../components/searchbar';
 import Author from '../../components/author';
 import AddAuthor from '../../components/add-author';
-import WebsiteInfo from '../../components/websiteinfo';
+import InfoForm from '../../components/infoform';
 import Header from '../../components/header';
 import CiteCard from '../../components/citecard';
 import ResultCard from '../../components/resultcard';
@@ -22,7 +23,8 @@ export default class Home extends Component {
     ],
     showResults: false,
     results: [
-    ]
+    ],
+    selectedResult: {}
   }
 
   /** Gets fired when we change tabs.
@@ -32,7 +34,9 @@ export default class Home extends Component {
    * @param {boolean} supported - whether the new tab citation style can be searched for.
    */
   navCallback = (value, tabName, supported) => {
-    this.setState({headerData: { value: value, tabName: tabName, supported: supported }});
+    this.setState({headerData: { value: value, tabName: tabName, supported: supported}});
+    if (this.state.selectedResult == undefined) {
+    }
     console.log("claba");
   };
 
@@ -46,10 +50,15 @@ export default class Home extends Component {
     this.setState({showResults: true, results: results});
   }
 
+  onSelectChange = (result) => {
+    console.log(result);
+    this.setState({selectedResult: result, authors: result.authors});
+  }
+
   addAuthor = (nameFirst, nameLast) => {
     console.log("received addAuthor");
     const authors_cp = this.state.authors;
-    authors_cp.push({firstName: nameFirst, lastName: nameLast});
+    authors_cp.push({type: "Person", first: nameFirst, last: nameLast});
     this.setState({authors: authors_cp});
   }
 
@@ -61,11 +70,11 @@ export default class Home extends Component {
 
 	render() {
     let author_components = [];
+    console.log("areiohwg", this.state.authors);
     for (let [index, author] of this.state.authors.entries()) {
       author_components.push(<Author
         index={index}
-        firstName={author.firstName}
-        lastName={author.lastName}
+        author={author}
         onRemove={this.removeAuthor}
       />);
     }
@@ -93,13 +102,17 @@ export default class Home extends Component {
             <Collapse in={this.state.showResults} className={style.citecard}>
               <ResultCard
                 results={this.state.results}
+                onSelectChange={this.onSelectChange}
               />
             </Collapse>
             <br />
-            <CiteCard text="Your citation will appear here..." />
+            <CiteCard
+              text="Your citation will appear here..."
+              result={this.state.selectedResult}
+            />
             <br />
             <form className={style.citecard}>
-              <WebsiteInfo onStateChange={this.onInfoChange} />
+              <InfoForm result={this.state.selectedResult} onStateChange={this.onInfoChange} />
               <h3 style="margin-bottom: 0.25em;">Authors</h3>
               <Divider />
               <br />

@@ -33,7 +33,7 @@ export default class BaseCiteCard extends Component {
     return (
       <Card className={style.citecard}>
         <CardContent>
-          <Typography variant="body1" color="textPrimary">{this.props.text}</Typography>
+          <div dangerouslySetInnerHTML={{ __html: this.props.content }} />
         </CardContent>
         <CardActions>
           <Tooltip title="Copy">

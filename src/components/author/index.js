@@ -14,26 +14,39 @@ export default class Author extends Component {
 	render() {
 		return (
       <Box display="flex" flexDirection="row" width="100%" justify="center" alignItems="center">
-        <Box flexGrow={1} className={style.sanemargin} >
-          <TextField
-            fullWidth
-            margin="dense"
-            variant="outlined"
-            id="nameFirst"
-            label="First Name"
-            defaultValue={this.props.firstName}
-          />
-        </Box>
-        <Box flexGrow={1} className={style.sanemargin} >
-          <TextField
-            fullWidth
-            margin="dense"
-            variant="outlined"
-            id="nameLast"
-            label="Last Name"
-            defaultValue={this.props.lastName}
-          />
-        </Box>
+        { this.props.author.type == "Person" ? (
+          <>
+            <Box flexGrow={1} className={style.sanemargin} >
+              <TextField
+                fullWidth
+                margin="dense"
+                variant="outlined"
+                label="First Name"
+                defaultValue={this.props.author.first}
+              />
+            </Box>
+            <Box flexGrow={1} className={style.sanemargin} >
+              <TextField
+                fullWidth
+                margin="dense"
+                variant="outlined"
+                label="Last Name"
+                defaultValue={this.props.author.last}
+              />
+            </Box>
+          </>
+        ) : (
+          <Box flexGrow={1} className={style.sanemargin} >
+              <TextField
+                fullWidth
+                margin="dense"
+                variant="outlined"
+                label="Name"
+                defaultValue={this.props.author.full}
+              />
+          </Box>
+        )
+        }
         <Box justify="center" alignItems="center">
           <IconButton onClick={this.remove}>
             <RemoveCircle />

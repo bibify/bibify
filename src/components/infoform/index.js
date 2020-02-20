@@ -2,19 +2,17 @@ import { h, Component } from 'preact';
 import { Divider, TextField } from '@material-ui/core';
 import style from './style';
 
-export default class WebsiteInfo extends Component {
+export default class InfoForm extends Component {
   static defaultProps = {
     title: "",
     publisher: "",
-    url: "",
-    sitename: "",
+    publishedDate: ""
   }
 
   state = {
     title: this.props.title,
     publisher: this.props.publisher,
-    url: this.props.url,
-    sitename: this.props.sitename
+    publishedDate: this.props.publishedDate
   }
 
   onChange = (e) => {
@@ -26,7 +24,7 @@ export default class WebsiteInfo extends Component {
   render() {
     return (
       <div>
-        <h3 style="margin-bottom: 0.25em;">Website</h3>
+        <h3 style="margin-bottom: 0.25em;">{this.props.type}</h3>
         <Divider />
         <br />
         <TextField
@@ -44,16 +42,6 @@ export default class WebsiteInfo extends Component {
           fullWidth
           margin="dense"
           variant="outlined"
-          id="sitename"
-          label="Website Name"
-          value={this.state.sitename}
-          onChange={this.onChange}
-        />
-        <TextField
-          className={style.sanemargin}
-          fullWidth
-          margin="dense"
-          variant="outlined"
           id="publisher"
           label="Publisher"
           value={this.state.publisher}
@@ -64,9 +52,9 @@ export default class WebsiteInfo extends Component {
           fullWidth
           margin="dense"
           variant="outlined"
-          id="url"
-          label="URL"
-          value={this.state.url}
+          id="publishedDate"
+          label="Published Date"
+          value={this.state.publishedDate}
           onChange={this.onChange}
         />
         <br />

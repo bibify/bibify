@@ -44,11 +44,14 @@ export default class ResultCard extends Component {
       currentItemIndex: index,
       currentItem: this.results[index]
     });
+
+    this.props.onSelectChange(this.results[index]);
   }
 
   render() {
     if (this.results != this.props.results) {
       this.results = this.props.results;
+      this.props.onSelectChange(this.results[0]);
       this.setState({
         currentItem: {
           thumbnail: "/picture.jpeg",

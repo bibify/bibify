@@ -10,8 +10,10 @@ export function searchBook(query) {
       axios.get(url)
         .then((response) => {
           for (let i = 0; i < response.data.length; ++i) {
-            // Add on a nice formatted string for authors
-            response.data[i].authors_formatted = format_authors(response.data[i].authors);
+            // Add on a nice formatted string for authors and reformat authors
+            // list for easier access
+            response.data[i].authors_formatted = formatAuthors(response.data[i].authors);
+            response.data[i].authors = convertAuthors(response.data[i].authors);
           }
 
           done(response.data);
@@ -26,7 +28,7 @@ export function searchBook(query) {
   });
 }
 
-function format_authors(authors_list) {
+function formatAuthors(authors_list) {
   if (authors_list.length == 1) {
     return authors_list[0];
   } else if (authors_list.length == 2) {
@@ -34,4 +36,27 @@ function format_authors(authors_list) {
   } else {
     return authors_list[0] + " et al.";
   }
+}
+
+function convertAuthors(originalAuthors) {
+  let authors = [];
+  if (originalAuthors != undefined) {
+    for (let result of originalAuthors) {
+      let author = {};
+
+      if (result.split(" ").length == 2) {
+        // Do it in 1st, last name order
+        author.type = "Person";
+        author.full = result;
+        [ author.first, author.last ] = result.split(" ");
+
+      } else {
+        // Add the whole thing
+        author.type = "Other";
+        author.full = result;
+      }
+      authors.push(author);
+    }
+  }
+  return authors;
 }
