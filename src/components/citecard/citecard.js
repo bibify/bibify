@@ -45,9 +45,10 @@ export default class CiteCard extends Component {
 
   onStyleChange = (v, name) => {
     console.log("st", v, name);
+    console.log(this.state.styles);
 
     this.setState({style: this.state.styles[v]});
-    cite(this.state.styles[v], this.state.result);
+    this.cite(this.state.styles[v].citationFile, this.state.result);
   }
 
   componentDidUpdate(previousProps, previousState, snapshot) {
