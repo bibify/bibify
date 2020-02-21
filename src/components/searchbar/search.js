@@ -12,6 +12,7 @@ export function searchBook(query) {
           for (let i = 0; i < response.data.length; ++i) {
             // Add on a nice formatted string for authors and reformat authors
             // list for easier access
+            response.data[i].publisher_formatted = formatPublisher(response.data[i].publisher);
             response.data[i].authors_formatted = formatAuthors(response.data[i].authors);
             response.data[i].authors = convertAuthors(response.data[i].authors);
           }
@@ -29,12 +30,25 @@ export function searchBook(query) {
 }
 
 function formatAuthors(authors_list) {
+  if (authors_list == undefined) {
+    return "Unknown Author";
+  }
+
   if (authors_list.length == 1) {
     return authors_list[0];
   } else if (authors_list.length == 2) {
     return authors_list.join(" & ");
   } else {
     return authors_list[0] + " et al.";
+  }
+}
+
+function formatPublisher(publisher) {
+  console.log("publisher", publisher);
+  if (publisher == undefined) {
+    return "Unknown Publisher";
+  } else {
+    return publisher;
   }
 }
 

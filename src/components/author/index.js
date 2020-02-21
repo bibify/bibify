@@ -7,6 +7,10 @@ import { Box, Grid } from '@material-ui/core';
 import { RemoveCircle } from '@material-ui/icons';
 
 export default class Author extends Component {
+  state = {
+    mode: "Person"
+  }
+
   remove = () => {
     this.props.onRemove(this.props.index);
   }

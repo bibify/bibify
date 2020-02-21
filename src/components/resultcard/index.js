@@ -106,7 +106,7 @@ export default class ResultCard extends Component {
               <Typography variant="h5">{this.state.currentItem.title}</Typography>
               <Typography variant="subtitle1" className={style.smallspace}>
                 {this.state.currentItem.authors_formatted}, {this.state.currentItem.date} &middot;&nbsp;
-                {this.state.currentItem.publisher}
+                {this.state.currentItem.publisher_formatted}
               </Typography>
               {showMoreResults}
             </Box>
