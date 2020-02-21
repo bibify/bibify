@@ -3,6 +3,7 @@ import axios from 'axios';
 import qs from 'qs';
 import BaseCiteCard from './basecitecard';
 import config from '../../../config.json';
+import {CircularProgress} from '@material-ui/core';
 
 
 export default class CiteCard extends Component {
@@ -10,7 +11,8 @@ export default class CiteCard extends Component {
     styles: [],
     style: "mla8",
     citation: "Your citation will appear here...",
-    result: {}
+    result: {},
+    progress: false
   }
 
   constructor() {
@@ -31,10 +33,11 @@ export default class CiteCard extends Component {
     result.style = style;
     console.log("style", style);
     console.log("result_sent", result);
+    this.setState({progress: true});
     axios.get(config.bibserverURL + "/api/cite?" + qs.stringify(result, { format : 'RFC3986' }))
     .then((res) => {
       console.log(res.data);
-      this.setState({citation: res.data})
+      this.setState({citation: res.data, progress: false})
     }).catch((err) => {
       console.log("Fetch failed:", err)
     })
@@ -59,6 +62,7 @@ export default class CiteCard extends Component {
   render() {
     return (
       <BaseCiteCard
+        progress={this.state.progress}
         content={this.state.citation}
         onStyleChange={this.onStyleChange}
         styles={this.state.styles}

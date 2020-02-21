@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 
 import { Card, CardContent, CardActions } from '@material-ui/core';
 import { IconButton, Tab, Tabs } from '@material-ui/core';
-import { SvgIcon, Typography, Tooltip, Snackbar } from '@material-ui/core';
+import { SvgIcon, Typography, Tooltip, Snackbar, LinearProgress } from '@material-ui/core';
 
 import style from './style';
 
@@ -33,7 +33,10 @@ export default class BaseCiteCard extends Component {
     return (
       <Card className={style.citecard}>
         <CardContent>
-          <div dangerouslySetInnerHTML={{ __html: this.props.content }} />
+          { this.props.progress ?
+            <LinearProgress/> :
+            <div dangerouslySetInnerHTML={{ __html: this.props.content }} />
+          }
         </CardContent>
         <CardActions>
           <Tooltip title="Copy">
