@@ -81,7 +81,7 @@ export default class ResultCard extends Component {
         <ListItem button onClick={() => this.changeCurrentItem(i)}>
           <ListItemText
             primary={this.results[i].title}
-            secondary={`${this.results[i].authors_formatted}, ${this.results[i].date} \u00B7 ${this.results[i].publisher}`}
+            secondary={`${this.results[i].authors_formatted}, ${this.results[i].date} \u00B7 ${this.results[i].publisher_formatted}`}
           />
         </ListItem>
       );
