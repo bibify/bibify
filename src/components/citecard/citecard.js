@@ -9,7 +9,7 @@ import {CircularProgress} from '@material-ui/core';
 export default class CiteCard extends Component {
   state = {
     styles: [],
-    style: "mla8",
+    style: {},
     citation: "Your citation will appear here...",
     result: {},
     progress: false
@@ -30,6 +30,8 @@ export default class CiteCard extends Component {
   }
 
   cite(style, result) {
+    if (Object.keys(result).length === 0) return;
+
     result.style = style;
     console.log("style", style);
     console.log("result_sent", result);
@@ -43,16 +45,28 @@ export default class CiteCard extends Component {
     })
   }
 
-  onStyleChange = (v, name) => {
-    console.log("st", v, name);
-    console.log(this.state.styles);
+  onStyleChange = (style) => {
+    this.setState({style: style});
+    this.cite(style.citationFile, this.state.result);
 
-    this.setState({style: this.state.styles[v]});
-    this.cite(this.state.styles[v].citationFile, this.state.result);
+    this.props.onStyleChange(style);
+  }
+
+  onStyleChooserSelect = (style) => {
+    this.setState(state => {
+      let styles = [...state.styles];
+      styles[0] = style;
+      return {
+        styles: styles
+      };
+    });
+
+    this.onStyleChange(style);
   }
 
   componentDidUpdate(previousProps, previousState, snapshot) {
-    if (this.props.result != previousProps.result) {
+    console.log("cry emoji", previousState.result, previousProps.result);
+    if (previousState.result != this.props.result) {
       // Cite (make request to backend server)
       console.log("soiw", this.state.style);
       let citation = this.cite(this.state.style.citationFile, this.props.result);
@@ -66,6 +80,7 @@ export default class CiteCard extends Component {
         progress={this.state.progress}
         content={this.state.citation}
         onStyleChange={this.onStyleChange}
+        onStyleChooserSelect={this.onStyleChooserSelect}
         styles={this.state.styles}
       />
     );

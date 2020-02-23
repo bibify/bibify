@@ -54,7 +54,7 @@ export default class SearchBar extends Component {
             onClick={this.getResults}
           >
             { this.state.progress ?
-              <CircularProgress color="text.primary" /> :
+              <CircularProgress /> :
               <Search />
             }
           </Button>

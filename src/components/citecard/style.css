@@ -17,6 +17,15 @@
   margin: 0.25em;
 }
 
+.biggermargin {
+  margin: 1em;
+}
+
 .headerbar {
   margin-bottom: 5em;
+}
+
+.footnote {
+  font-weight: lighter;
+  font-size: 0.75em;
 }

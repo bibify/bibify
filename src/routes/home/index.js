@@ -24,7 +24,8 @@ export default class Home extends Component {
     showResults: false,
     results: [
     ],
-    selectedResult: {}
+    selectedResult: {},
+    style: {}
   }
 
   /** Gets fired when we change tabs.
@@ -41,18 +42,19 @@ export default class Home extends Component {
   };
 
   onInfoChange = (info) => {
-    this.setState({srcInfo: info})
-    console.log(this.state);
+    this.setState({selectedResult: info})
   }
 
   onResults = (results) => {
-    console.log("res", results);
     this.setState({showResults: true, results: results});
   }
 
   onSelectChange = (result) => {
-    console.log(result);
     this.setState({selectedResult: result, authors: result.authors});
+  }
+
+  onStyleChange = (style) => {
+    this.setState({style: style});
   }
 
   addAuthor = (nameFirst, nameLast) => {
@@ -109,10 +111,15 @@ export default class Home extends Component {
             <CiteCard
               text="Your citation will appear here..."
               result={this.state.selectedResult}
+              onStyleChange={this.onStyleChange}
             />
             <br />
             <form className={style.citecard}>
-              <InfoForm result={this.state.selectedResult} onStateChange={this.onInfoChange} />
+              <InfoForm
+                result={this.state.selectedResult}
+                onDataChange={this.onInfoChange}
+                type="book"
+              />
               <h3 style="margin-bottom: 0.25em;">Authors</h3>
               <Divider />
               <br />

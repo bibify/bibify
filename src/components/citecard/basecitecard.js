@@ -1,33 +1,52 @@
 import { h, Component } from 'preact';
 
-import { Card, CardContent, CardActions } from '@material-ui/core';
-import { IconButton, Tab, Tabs } from '@material-ui/core';
-import { SvgIcon, Typography, Tooltip, Snackbar, LinearProgress } from '@material-ui/core';
+import { Card, CardContent, CardActions, Button } from '@material-ui/core';
+import { IconButton, Tab, Tabs, Divider } from '@material-ui/core';
+import { SvgIcon, Typography, Tooltip, Snackbar, LinearProgress, Collapse } from '@material-ui/core';
 
+import StyleChooser from './stylechooser';
 import style from './style';
 
 export default class BaseCiteCard extends Component {
   state = {
     styleIndex: 0,
-    styleName: "MLA"
+    styleName: "MLA",
+    showChooser: false
   };
 
   handleStyleChange = (e, v) => {
-    this.setState({styleIndex: v, styleName: this.props.styles[v].citationName});
-    this.props.onStyleChange(v, this.props.styles[v].citationName);
+    if (v == 3) {
+      this.setState({showChooser: !this.state.showChooser})
+    } else {
+      this.setState({styleIndex: v, styleName: this.props.styles[v].citationName, showChooser: false});
+      this.props.onStyleChange(this.props.styles[v]);
+    }
+  }
+
+  onStyleChooserSelect = (style) => {
+    this.setState({styleIndex: 0, styleName: style.citationName, showChooser: false});
+    this.props.onStyleChooserSelect(style);
   }
 
   render() {
     let styleTabs = [];
 
-    for (let style = 0; style < Math.min(3, this.props.styles.length); style++) {
-      if (this.props.styles[style].citationShortName != null) {
-        console.log(this.props.styles[style].citationShortName);
-        styleTabs.push(<Tab value={parseInt(style)} label={this.props.styles[style].citationShortName} />);
-      } else {
-        console.log(this.props.styles[style].citationName);
-        styleTabs.push(<Tab value={parseInt(style)} label={this.props.styles[style].citationName} />);
+    if (this.props.styles.length >= 3) {
+      for (let style = 0; style < 3; style++) {
+        if (this.props.styles[style].citationShortName != null) {
+          console.log(style, this.props.styles[style]);
+          styleTabs.push(<Tab value={parseInt(style)} label={this.props.styles[style].citationShortName} />);
+        } else {
+          styleTabs.push(<Tab value={parseInt(style)} label={this.props.styles[style].citationName.split(" ")[0]} />);
+        }
       }
+
+      styleTabs.push(
+        <Tab
+          value="3"
+          label={this.state.showChooser ? "Less..." : "More..."}
+        />
+      );
     }
 
     return (
@@ -52,6 +71,12 @@ export default class BaseCiteCard extends Component {
             {styleTabs}
           </Tabs>
         </CardActions>
+        <Collapse in={this.state.showChooser}>
+          <Divider />
+          <StyleChooser
+            onStyleSelect={this.onStyleChooserSelect}
+          />
+        </Collapse>
       </Card>
     );
   }
