@@ -8,7 +8,22 @@ import { RemoveCircle } from '@material-ui/icons';
 
 export default class Author extends Component {
   state = {
-    mode: "Person"
+    mode: "Person",
+    index: this.props.index,
+    author: this.props.author
+  }
+
+  timeout = null;
+
+  handleChange = (e) => {
+    let author = {...this.state.author};
+    author[e.target.id] = e.target.value;
+    this.setState({author: author});
+
+    clearTimeout(this.timeout);
+    setTimeout(timeout, () => {
+      this.props.onAuthorChange(author);
+    });
   }
 
   remove = () => {
@@ -26,7 +41,9 @@ export default class Author extends Component {
                 margin="dense"
                 variant="outlined"
                 label="First Name"
-                defaultValue={this.props.author.first}
+                id="first"
+                value={this.state.author.first}
+                onChange={this.handleChange}
               />
             </Box>
             <Box flexGrow={1} className={style.sanemargin} >
@@ -35,7 +52,9 @@ export default class Author extends Component {
                 margin="dense"
                 variant="outlined"
                 label="Last Name"
-                defaultValue={this.props.author.last}
+                id="last"
+                value={this.state.author.last}
+                onChange={this.handleChange}
               />
             </Box>
           </>
@@ -46,7 +65,9 @@ export default class Author extends Component {
                 margin="dense"
                 variant="outlined"
                 label="Name"
-                defaultValue={this.props.author.full}
+                id="full"
+                value={this.state.author.full}
+                onChange={this.handleChange}
               />
           </Box>
         )

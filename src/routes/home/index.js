@@ -19,12 +19,10 @@ export default class Home extends Component {
       tabName: "Book",
       supported: true
     },
-    authors: [
-    ],
     showResults: false,
     results: [
     ],
-    selectedResult: {},
+    selectedResult: {authors: []},
     style: {}
   }
 
@@ -50,7 +48,7 @@ export default class Home extends Component {
   }
 
   onSelectChange = (result) => {
-    this.setState({selectedResult: result, authors: result.authors});
+    this.setState({selectedResult: result});
   }
 
   onStyleChange = (style) => {
@@ -58,22 +56,49 @@ export default class Home extends Component {
   }
 
   addAuthor = (nameFirst, nameLast) => {
-    console.log("received addAuthor");
-    const authors_cp = this.state.authors;
-    authors_cp.push({type: "Person", first: nameFirst, last: nameLast});
-    this.setState({authors: authors_cp});
+    this.setState((state, props) => {
+      let result = {...state.selectedResult};
+      let authors = [...result.authors];
+      authors.push({type: "Person", first: nameFirst, last: nameLast});
+
+      result.authors = authors;
+
+      return {
+        selectedResult: result
+      };
+    });
+  }
+
+  changeAuthor = (index, author) => {
+    this.setState((state, props) => {
+      let result = {...state.selectedResult};
+      let authors = [...result.authors];
+      authors[index] = author;
+
+      result.authors = authors;
+      return {
+        selectedResult: result
+      };
+    });
   }
 
   removeAuthor = (index) => {
-    const authors_cp = this.state.authors;
-    authors_cp.splice(index, 1);
-    this.setState({authors: authors_cp});
+    this.setState((state, props) => {
+      let result = {...state.selectedResult};
+      let authors = [...result.authors];
+      authors.splice(index, 1);
+
+      result.authors = authors;
+      return {
+        selectedResult: result
+      };
+    });
   }
 
 	render() {
     let author_components = [];
-    console.log("areiohwg", this.state.authors);
-    for (let [index, author] of this.state.authors.entries()) {
+    console.log(this.state.selectedResult);
+    for (let [index, author] of (this.state.selectedResult.authors.entries())) {
       author_components.push(<Author
         index={index}
         author={author}

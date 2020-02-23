@@ -8,7 +8,7 @@ import style from './style';
 
 export default class InfoForm extends Component {
   state = {
-    result: {}
+    result: {authors: []}
   }
 
   timeout = null;

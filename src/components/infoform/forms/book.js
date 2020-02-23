@@ -9,7 +9,7 @@ import style from '../style';
 export class BookForm extends Component {
   state = {
     fields: [],
-    data: {},
+    data: {authors: []},
     showOtherFields: false
   }
 

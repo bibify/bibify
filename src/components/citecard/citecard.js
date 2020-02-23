@@ -30,13 +30,12 @@ export default class CiteCard extends Component {
   }
 
   cite(style, result) {
-    if (Object.keys(result).length === 0) return;
+    // Default, empty result field has only empty authors list - ignore "empty" results
+    if (Object.keys(result).length <= 1) return;
+    console.log("sss", result);
 
-    result.style = style;
-    console.log("style", style);
-    console.log("result_sent", result);
     this.setState({progress: true});
-    axios.get(config.bibserverURL + "/api/cite?" + qs.stringify(result, { format : 'RFC3986' }))
+    axios.get(config.bibserverURL + "/api/cite?" + qs.stringify(Object.assign({style: style}, result), { format : 'RFC3986' }))
     .then((res) => {
       console.log(res.data);
       this.setState({citation: res.data, progress: false})
@@ -65,11 +64,12 @@ export default class CiteCard extends Component {
   }
 
   componentDidUpdate(previousProps, previousState, snapshot) {
-    console.log("cry emoji", previousState.result, previousProps.result);
     if (previousState.result != this.props.result) {
       // Cite (make request to backend server)
-      console.log("soiw", this.state.style);
-      let citation = this.cite(this.state.style.citationFile, this.props.result);
+      console.log("soiw", previousState.result);
+
+      let citation = "Your citation will appear here...";
+      citation = this.cite(this.state.style.citationFile, this.props.result) || citation;
       this.setState({result: this.props.result, citation: citation});
     }
   }
