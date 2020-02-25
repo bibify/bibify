@@ -1,0 +1,22 @@
+.resultcard {
+  width: 100%;
+  min-width: 100%;
+}
+
+.sanemargin {
+  margin: 0.25em;
+}
+
+.thumb {
+  width: 30px;
+  height: 30px;
+}
+
+.thumblg {
+  width: 70px;
+  height: 70px;
+}
+
+.smallspace {
+  line-height: 0.5em;
+}
