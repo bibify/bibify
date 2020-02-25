@@ -16,10 +16,11 @@ export default class SearchBar extends Component {
 
   getResults = async () => {
     console.log("Getting results");
-    this.setState({progress: true})
+    this.setState({progress: true});
     search.searchBook(this.state.query)
       .then((results) => {
-        this.setState({progress: false})
+        this.setState({progress: false});
+        console.log(results);
         this.props.onResults(results);
       })
       .catch((error) => {
