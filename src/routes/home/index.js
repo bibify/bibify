@@ -44,7 +44,7 @@ export default class Home extends Component {
   }
 
   onResults = (results) => {
-    this.setState({showResults: true, results: results});
+    this.setState({showResults: true, results: results, selectedResult: result});
   }
 
   onSelectChange = (result) => {
