@@ -22,7 +22,7 @@ export class BookForm extends Component {
         let fields = res.data;
         for (let i = 0; i < fields.length; i++) {
           console.log("field", fields[i].field);
-          if (["title", "publisher", "date", "accessDate", "url", "place", "edition", "volume"].indexOf(fields[i].field) != -1) {
+          if (["title", "publisher", "date", "url", "place", "edition", "volume"].indexOf(fields[i].field) != -1) {
             fields.splice(i, 1);
             i--;
           }
@@ -104,16 +104,6 @@ export class BookForm extends Component {
           id="volume"
           label="Volume"
           value={this.state.data.volume || ""}
-          onChange={this.onChange}
-        />
-        <TextField
-          className={style.sanemargin}
-          fullWidth
-          margin="dense"
-          variant="outlined"
-          id="accessDate"
-          label="Access Date"
-          value={this.state.data.accessDate || ""}
           onChange={this.onChange}
         />
         <br />
