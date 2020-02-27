@@ -144,7 +144,7 @@ export default class Home extends Component {
               <InfoForm
                 result={this.state.selectedResult}
                 onDataChange={this.onInfoChange}
-                type="book"
+                type={this.state.headerData.tabName.toLowerCase()}
               />
               <h3 style="margin-bottom: 0.25em;">Authors</h3>
               <Divider />
