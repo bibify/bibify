@@ -4,16 +4,31 @@ import style from './style';
 import { IconButton, TextField } from '@material-ui/core';
 import { Box, Grid } from '@material-ui/core';
 
-import { RemoveCircle } from '@material-ui/icons';
+import { RemoveCircle, Domain, Person } from '@material-ui/icons';
 
 export default class Author extends Component {
   state = {
-    mode: "Person",
     index: this.props.index,
     author: this.props.author
   }
 
   timeout = null;
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return {
+      author: nextProps.author
+    };
+  }
+
+  togglePerson = () => {
+    let author = this.state.author;
+    if (author.type == "Person") {
+      author.type = "Other";
+    } else {
+      author.type = "Person";
+    }
+    this.setState({author: author});
+  }
 
   handleChange = (e) => {
     let author = {...this.state.author};
@@ -33,7 +48,7 @@ export default class Author extends Component {
 	render() {
 		return (
       <Box display="flex" flexDirection="row" width="100%" justify="center" alignItems="center">
-        { this.props.author.type == "Person" ? (
+        { this.state.author.type == "Person" ? (
           <>
             <Box flexGrow={1} className={style.sanemargin} >
               <TextField
@@ -42,7 +57,7 @@ export default class Author extends Component {
                 variant="outlined"
                 label="First Name"
                 id="first"
-                value={this.state.author.first}
+                value={this.state.author.first || ""}
                 onChange={this.handleChange}
               />
             </Box>
@@ -53,30 +68,43 @@ export default class Author extends Component {
                 variant="outlined"
                 label="Last Name"
                 id="last"
-                value={this.state.author.last}
+                value={this.state.author.last || ""}
                 onChange={this.handleChange}
               />
             </Box>
+            <Box justify="center" alignItems="center">
+              <IconButton onClick={this.togglePerson}>
+                <Person />
+              </IconButton>
+              <IconButton onClick={this.remove}>
+                <RemoveCircle />
+              </IconButton>
+            </Box>
           </>
         ) : (
-          <Box flexGrow={1} className={style.sanemargin} >
-              <TextField
-                fullWidth
-                margin="dense"
-                variant="outlined"
-                label="Name"
-                id="full"
-                value={this.state.author.full}
-                onChange={this.handleChange}
-              />
-          </Box>
+          <>
+            <Box flexGrow={1} className={style.sanemargin} >
+                <TextField
+                  fullWidth
+                  margin="dense"
+                  variant="outlined"
+                  label="Name"
+                  id="full"
+                  value={this.state.author.full || ""}
+                  onChange={this.handleChange}
+                />
+            </Box>
+            <Box justify="center" alignItems="center">
+              <IconButton onClick={this.togglePerson}>
+                <Domain />
+              </IconButton>
+              <IconButton onClick={this.remove}>
+                <RemoveCircle />
+              </IconButton>
+            </Box>
+          </>
         )
         }
-        <Box justify="center" alignItems="center">
-          <IconButton onClick={this.remove}>
-            <RemoveCircle />
-          </IconButton>
-        </Box>
       </Box>
 		);
 	}

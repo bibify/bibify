@@ -55,11 +55,11 @@ export default class Home extends Component {
     this.setState({style: style});
   }
 
-  addAuthor = (nameFirst, nameLast) => {
+  addAuthor = (author) => {
     this.setState((state, props) => {
       let result = {...state.selectedResult};
       let authors = [...result.authors];
-      authors.push({type: "Person", first: nameFirst, last: nameLast});
+      authors.push(author);
 
       result.authors = authors;
 
@@ -97,14 +97,15 @@ export default class Home extends Component {
 
 	render() {
     let author_components = [];
-    console.log(this.state.selectedResult);
     for (let [index, author] of (this.state.selectedResult.authors.entries())) {
+      console.log(index, author);
       author_components.push(<Author
         index={index}
         author={author}
         onRemove={this.removeAuthor}
       />);
     }
+    console.log("selected", author_components);
 
 		return (
       <div id="home" class={style.home}>
