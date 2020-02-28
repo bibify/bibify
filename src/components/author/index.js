@@ -9,7 +9,8 @@ import { RemoveCircle, Domain, Person } from '@material-ui/icons';
 export default class Author extends Component {
   state = {
     index: this.props.index,
-    author: this.props.author
+    author: this.props.author,
+    internalAuthor: this.props.author
   }
 
   timeout = null;
@@ -31,14 +32,14 @@ export default class Author extends Component {
   }
 
   handleChange = (e) => {
-    let author = {...this.state.author};
+    let author = {...this.state.internalAuthor};
     author[e.target.id] = e.target.value;
-    this.setState({author: author});
+    this.setState({author: author, internalAuthor: author});
 
     clearTimeout(this.timeout);
-    setTimeout(timeout, () => {
-      this.props.onAuthorChange(author);
-    });
+    this.timeout = setTimeout(() => {
+      this.props.onChange(this.state.index, author);
+    }, 1000);
   }
 
   remove = () => {
@@ -57,7 +58,7 @@ export default class Author extends Component {
                 variant="outlined"
                 label="First Name"
                 id="first"
-                value={this.state.author.first || ""}
+                value={this.state.internalAuthor.first || ""}
                 onChange={this.handleChange}
               />
             </Box>
@@ -68,7 +69,7 @@ export default class Author extends Component {
                 variant="outlined"
                 label="Last Name"
                 id="last"
-                value={this.state.author.last || ""}
+                value={this.state.internalAuthor.last || ""}
                 onChange={this.handleChange}
               />
             </Box>
@@ -90,7 +91,7 @@ export default class Author extends Component {
                   variant="outlined"
                   label="Name"
                   id="full"
-                  value={this.state.author.full || ""}
+                  value={this.state.internalAuthor.full || ""}
                   onChange={this.handleChange}
                 />
             </Box>
