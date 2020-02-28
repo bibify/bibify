@@ -29,6 +29,7 @@ export default class Author extends Component {
       author.type = "Person";
     }
     this.setState({author: author});
+    this.props.onChange(this.state.index, author);
   }
 
   handleChange = (e) => {
