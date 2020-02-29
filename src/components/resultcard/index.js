@@ -81,7 +81,7 @@ export default class ResultCard extends Component {
         <ListItem button onClick={() => this.changeCurrentItem(i)}>
           <ListItemText
             primary={this.results[i].title}
-            secondary={`${this.results[i].authors_formatted}, ${this.results[i].date} \u00B7 ${this.results[i].publisher_formatted}`}
+            secondary={`${this.results[i].authors_formatted}, ${this.results[i].date || "Unknown Date"} \u00B7 ${this.results[i].publisher_formatted}`}
           />
         </ListItem>
       );
@@ -105,7 +105,7 @@ export default class ResultCard extends Component {
             <Box display="flex" flexDirection="column" paddingLeft="1em;" >
               <Typography variant="h5">{this.state.currentItem.title}</Typography>
               <Typography variant="subtitle1" className={style.smallspace}>
-                {this.state.currentItem.authors_formatted}, {this.state.currentItem.date} &middot;&nbsp;
+                {this.state.currentItem.authors_formatted}, {this.state.currentItem.date || "Unknown Date"} &middot;&nbsp;
                 {this.state.currentItem.publisher_formatted}
               </Typography>
               {showMoreResults}

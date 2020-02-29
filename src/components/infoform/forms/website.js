@@ -22,7 +22,7 @@ export class WebsiteForm extends Component {
         let fields = res.data;
         for (let i = 0; i < fields.length; i++) {
           console.log("field", fields[i].field);
-          if (["title", "websiteTitle", "date", "accessDate", "url"].indexOf(fields[i].field) != -1) {
+          if (["title", "publisher", "websiteTitle", "date", "accessDate", "url"].indexOf(fields[i].field) != -1) {
             fields.splice(i, 1);
             i--;
           }
@@ -116,8 +116,18 @@ export class WebsiteForm extends Component {
           margin="dense"
           variant="outlined"
           id="container-title"
-          label="Publisher/Website Title"
+          label="Website Title"
           value={this.state.data["container-title"] || ""}
+          onChange={this.onChange}
+        />
+        <TextField
+          className={style.sanemargin}
+          fullWidth
+          margin="dense"
+          variant="outlined"
+          id="publisher"
+          label="Publisher"
+          value={this.state.data.publisher || ""}
           onChange={this.onChange}
         />
         <TextField
