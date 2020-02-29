@@ -18,10 +18,8 @@ export default class StyleChooser extends Component {
 
   constructor() {
     super();
-    console.log(config.bibserverURL + "/api/styles");
     axios.get(config.bibserverURL + "/api/styles")
       .then((res) => {
-        console.log("sty", res.data.citationStyles);
         this.setState({styles: res.data.citationStyles});
       })
       .catch((err) => {
@@ -45,7 +43,6 @@ export default class StyleChooser extends Component {
 
   onStyleSelect = (index) => {
     let style = this.state.styles[index];
-    console.log(style);
 
     if (this.props.onStyleSelect != undefined) {
       this.props.onStyleSelect(style);

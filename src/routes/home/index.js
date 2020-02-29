@@ -36,7 +36,6 @@ export default class Home extends Component {
     this.setState({headerData: { value: value, tabName: tabName, supported: supported}});
     if (this.state.selectedResult == undefined) {
     }
-    console.log("claba");
   };
 
   onInfoChange = (info) => {
@@ -98,7 +97,6 @@ export default class Home extends Component {
 	render() {
     let author_components = [];
     for (let [index, author] of (this.state.selectedResult.authors.entries())) {
-      console.log(index, author);
       author_components.push(<Author
         index={index}
         author={author}
@@ -107,7 +105,6 @@ export default class Home extends Component {
         onRemove={this.removeAuthor}
       />);
     }
-    console.log("selected", author_components);
 
 		return (
       <div id="home" class={style.home}>
@@ -126,7 +123,7 @@ export default class Home extends Component {
           >
             <h1>Bibify - Cite {this.state.headerData.tabName} in MLA Format</h1>
             <Collapse in={this.state.headerData.supported} className={style.citecard}>
-              <SearchBar onResults={this.onResults} />
+              <SearchBar onResults={this.onResults} type={this.state.headerData.tabName.toLowerCase()} />
             </Collapse>
             <br />
             <Collapse in={this.state.showResults} className={style.citecard}>

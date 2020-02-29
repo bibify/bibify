@@ -4,10 +4,10 @@ import config from '../../../config.json';
 export function searchBook(query) {
   return new Promise((done, error) => {
     try {
-      let url = config["bibserverURL"];
-      url += "/api/books/?q=" + encodeURIComponent(query).replace(/%20/g, "+");
+      let apiURL = config["bibserverURL"];
+      apiURL += "/api/books?q=" + encodeURIComponent(query).replace(/%20/g, "+");
 
-      axios.get(url)
+      axios.get(apiURL)
         .then((response) => {
           for (let i = 0; i < response.data.length; ++i) {
             // Add on a nice formatted string for authors and reformat authors
@@ -23,6 +23,25 @@ export function searchBook(query) {
           error(err);
         });
 
+    } catch (err) {
+      error(err);
+    }
+  });
+}
+
+export function getWebsite(url) {
+  return new Promise((done, error) => {
+    try {
+      let apiURL = config["bibserverURL"];
+      apiURL += "/api/website?url=" + encodeURIComponent(url).replace(/%20/g, "+");
+
+      axios.get(apiURL)
+        .then((response) => {
+          response.data.publisher_formatted = formatPublisher(response.data.publisher);
+          response.data.authors_formatted = formatAuthors(response.data.authors);
+          response.data.authors = convertAuthors(response.data.authors);
+          done([response.data]);
+        })
     } catch (err) {
       error(err);
     }

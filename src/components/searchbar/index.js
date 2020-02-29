@@ -17,15 +17,31 @@ export default class SearchBar extends Component {
   getResults = async () => {
     console.log("Getting results");
     this.setState({progress: true});
-    search.searchBook(this.state.query)
-      .then((results) => {
-        this.setState({progress: false});
-        console.log(results);
-        this.props.onResults(results);
-      })
-      .catch((error) => {
-        console.log("Error was", error);
-      });
+
+    switch (this.props.type) {
+      case "book":
+        search.searchBook(this.state.query)
+          .then((results) => {
+            this.setState({progress: false});
+            console.log(results);
+            this.props.onResults(results);
+          })
+          .catch((error) => {
+            console.log("Error was", error);
+          });
+        break;
+      case "website":
+        search.getWebsite(this.state.query)
+          .then((results) => {
+            this.setState({progress: false});
+            console.log(results);
+            this.props.onResults(results);
+          })
+          .catch((error) => {
+            console.log("Error was", error);
+          });
+        break;
+    }
   }
 
   onQueryChange = (e) => {

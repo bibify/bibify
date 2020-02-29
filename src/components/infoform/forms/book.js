@@ -16,12 +16,10 @@ export class BookForm extends Component {
   constructor(props) {
     super(props);
 
-    console.log(this.props);
     axios.get(config.bibserverURL + "/api/fields/book")
       .then((res) => {
         let fields = res.data;
         for (let i = 0; i < fields.length; i++) {
-          console.log("field", fields[i].field);
           if (["title", "publisher", "date", "url", "place", "edition", "volume"].indexOf(fields[i].field) != -1) {
             fields.splice(i, 1);
             i--;
@@ -39,7 +37,6 @@ export class BookForm extends Component {
     this.setState((state, props) => {
       let data = { ...state.data };
       data[e.target.id] = e.target.value;
-      console.log(data);
       props.onDataChange(data);
 
       return {
