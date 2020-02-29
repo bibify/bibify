@@ -15,6 +15,7 @@ export function searchBook(query) {
             response.data[i].publisher_formatted = formatPublisher(response.data[i].publisher);
             response.data[i].authors_formatted = formatAuthors(response.data[i].authors);
             response.data[i].authors = convertAuthors(response.data[i].authors);
+            response.data[i].date = response.data[i].date || "Unknown Date";
           }
 
           done(response.data);
@@ -40,6 +41,7 @@ export function getWebsite(url) {
           response.data.publisher_formatted = formatPublisher(response.data.publisher);
           response.data.authors_formatted = formatAuthors(response.data.authors);
           response.data.authors = convertAuthors(response.data.authors);
+          response.data.date = response.data.date || "Unknown Date";
           response.data.accessDate = response.data.accessDate || new Date().toISOString().slice(0,10);
          done([response.data]);
         })
@@ -50,7 +52,7 @@ export function getWebsite(url) {
 }
 
 function formatAuthors(authors_list) {
-  if (authors_list == undefined) {
+  if (authors_list == undefined || authors_list[0] == undefined) {
     return "Unknown Author";
   }
 
