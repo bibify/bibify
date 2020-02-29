@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import { createRef } from 'preact';
 
 import { Card, CardContent, CardActions, Button } from '@material-ui/core';
 import { IconButton, Tab, Tabs, Divider } from '@material-ui/core';
@@ -14,6 +15,11 @@ export default class BaseCiteCard extends Component {
     showChooser: false
   };
 
+  constructor(props) {
+    super(props);
+    this.citation = createRef();
+  }
+
   handleStyleChange = (e, v) => {
     if (v == 3) {
       this.setState({showChooser: !this.state.showChooser})
@@ -26,6 +32,15 @@ export default class BaseCiteCard extends Component {
   onStyleChooserSelect = (style) => {
     this.setState({styleIndex: 0, styleName: style.citationName, showChooser: false});
     this.props.onStyleChooserSelect(style);
+  }
+
+  copyToClipboard = (e) => {
+    let range = document.createRange();
+    range.selectNode(this.citation.current);
+    window.getSelection().removeAllRanges(); // clear current selection
+    window.getSelection().addRange(range); // to select text
+    document.execCommand("copy");
+    window.getSelection().removeAllRanges();// to deselect
   }
 
   render() {
@@ -54,12 +69,12 @@ export default class BaseCiteCard extends Component {
         <CardContent>
           { this.props.progress ?
             <LinearProgress/> :
-            <div dangerouslySetInnerHTML={{ __html: this.props.content }} />
+            <div ref={this.citation} dangerouslySetInnerHTML={{ __html: this.props.content }} />
           }
         </CardContent>
         <CardActions>
           <Tooltip title="Copy">
-            <IconButton>
+            <IconButton onClick={this.copyToClipboard}>
               <SvgIcon>
                 <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                   <path fill="#000000" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" />

@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import { createRef } from 'preact';
 
 import style from './style';
 import SearchBar from '../../components/searchbar';
@@ -39,9 +40,10 @@ export default class Home extends Component {
    * @param {boolean} supported - whether the new tab citation style can be searched for.
    */
   navCallback = (value, tabName, supported) => {
-    this.setState({headerData: { value: value, tabName: tabName, supported: supported}});
-    if (this.state.selectedResult == undefined) {
-    }
+    this.setState({
+      headerData: { value: value, tabName: tabName, supported: supported},
+      showResults: false
+    });
   };
 
   onInfoChange = (info) => {
@@ -160,6 +162,7 @@ export default class Home extends Component {
               <SearchBar
                 onResults={this.onResults}
                 type={this.state.headerData.tabName.toLowerCase()}
+                key={this.state.headerData.tabName.toLowerCase()}
                 showBanner={this.showBanner}
               />
             </Collapse>
