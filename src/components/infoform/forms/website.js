@@ -17,12 +17,12 @@ export class WebsiteForm extends Component {
     super(props);
 
     console.log(this.props);
-    axios.get(config.bibserverURL + "/api/fields/book")
+    axios.get(config.bibserverURL + "/api/fields/webpage")
       .then((res) => {
         let fields = res.data;
         for (let i = 0; i < fields.length; i++) {
           console.log("field", fields[i].field);
-          if (["title", "publisher", "date", "accessDate", "url", "place"].indexOf(fields[i].field) != -1) {
+          if (["title", "websiteTitle", "date", "accessDate", "url"].indexOf(fields[i].field) != -1) {
             fields.splice(i, 1);
             i--;
           }
@@ -91,9 +91,9 @@ export class WebsiteForm extends Component {
           fullWidth
           margin="dense"
           variant="outlined"
-          id="url"
+          id="URL"
           label="URL"
-          value={this.state.data.url || ""}
+          value={this.state.data.URL || ""}
           onChange={this.onChange}
         />
         <TextField
@@ -115,19 +115,9 @@ export class WebsiteForm extends Component {
           fullWidth
           margin="dense"
           variant="outlined"
-          id="publisher"
-          label="Publisher"
-          value={this.state.data.publisher || ""}
-          onChange={this.onChange}
-        />
-        <TextField
-          className={style.sanemargin}
-          fullWidth
-          margin="dense"
-          variant="outlined"
-          id="place"
-          label="Publisher Location"
-          value={this.state.data.place || ""}
+          id="container-title"
+          label="Publisher/Website Title"
+          value={this.state.data["container-title"] || ""}
           onChange={this.onChange}
         />
         <TextField

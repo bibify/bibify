@@ -19,7 +19,7 @@ export default class Header extends Component {
 
   tabs = [
     "Book",
-    "Website",
+    "Webpage",
     "Journal",
     "LEAVE_EMPTY",
     "Article",
@@ -35,7 +35,7 @@ export default class Header extends Component {
 
   supportedSources = [
     "Book",
-    "Website"
+    "Webpage"
   ]
 
   handleChange = (event, value) => {

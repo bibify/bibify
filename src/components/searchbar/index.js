@@ -31,7 +31,7 @@ export default class SearchBar extends Component {
             this.props.showBanner("error", "Failed to get results: " + error + ". Please try again later.");
           });
         break;
-      case "website":
+      case "webpage":
         search.getWebsite(this.state.query)
           .then((results) => {
             this.setState({progress: false});

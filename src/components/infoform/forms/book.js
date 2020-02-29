@@ -20,7 +20,7 @@ export class BookForm extends Component {
       .then((res) => {
         let fields = res.data;
         for (let i = 0; i < fields.length; i++) {
-          if (["title", "publisher", "date", "url", "place", "edition", "volume"].indexOf(fields[i].field) != -1) {
+          if (["title", "publisher", "date", "URL", "publisher-place", "edition", "volume"].indexOf(fields[i].field) != -1) {
             fields.splice(i, 1);
             i--;
           }
@@ -37,6 +37,7 @@ export class BookForm extends Component {
     this.setState((state, props) => {
       let data = { ...state.data };
       data[e.target.id] = e.target.value;
+      console.log(data);
       props.onDataChange(data);
 
       return {
@@ -122,9 +123,9 @@ export class BookForm extends Component {
           fullWidth
           margin="dense"
           variant="outlined"
-          id="place"
+          id="publisher-place"
           label="Publisher Location"
-          value={this.state.data.place || ""}
+          value={this.state.data["publisher-place"] || ""}
           onChange={this.onChange}
         />
         <TextField

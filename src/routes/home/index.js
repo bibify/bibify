@@ -71,6 +71,9 @@ export default class Home extends Component {
       }
     }
 
+    result.type = this.state.headerData.tabName.toLowerCase();
+    console.log("urmomgay", result);
+
     this.setState({selectedResult: result});
   }
 

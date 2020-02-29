@@ -31,20 +31,23 @@ export default class InfoForm extends Component {
       />
     );
 
-    if (this.props.type == "book") {
-      form = (
-        <BookForm
-          result={this.props.result}
-          onDataChange={this.onChange}
-        />
-      );
-    } else if (this.props.type == "website") {
-      form = (
-        <WebsiteForm
-          result={this.props.result}
-          onDataChange={this.onChange}
-        />
-      );
+    switch (this.props.type) {
+      case "book":
+        form = (
+          <BookForm
+            result={this.props.result}
+            onDataChange={this.onChange}
+          />
+        );
+        break;
+      case "webpage":
+        form = (
+          <WebsiteForm
+            result={this.props.result}
+            onDataChange={this.onChange}
+          />
+        );
+        break;
     }
 
     return form;
