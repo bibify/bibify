@@ -102,6 +102,7 @@ export default class Home extends Component {
       author_components.push(<Author
         index={index}
         author={author}
+        key={JSON.stringify(author)}
         onChange={this.changeAuthor}
         onRemove={this.removeAuthor}
       />);

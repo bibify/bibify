@@ -9,17 +9,10 @@ import { RemoveCircle, Domain, Person } from '@material-ui/icons';
 export default class Author extends Component {
   state = {
     index: this.props.index,
-    author: this.props.author,
-    internalAuthor: this.props.author
+    author: this.props.author
   }
 
   timeout = null;
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    return {
-      author: nextProps.author
-    };
-  }
 
   togglePerson = () => {
     let author = this.state.author;
@@ -33,9 +26,9 @@ export default class Author extends Component {
   }
 
   handleChange = (e) => {
-    let author = {...this.state.internalAuthor};
+    let author = {...this.state.author};
     author[e.target.id] = e.target.value;
-    this.setState({author: author, internalAuthor: author});
+    this.setState({author: author});
 
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
@@ -59,7 +52,7 @@ export default class Author extends Component {
                 variant="outlined"
                 label="First Name"
                 id="first"
-                value={this.state.internalAuthor.first || ""}
+                value={this.state.author.first || ""}
                 onChange={this.handleChange}
               />
             </Box>
@@ -70,7 +63,7 @@ export default class Author extends Component {
                 variant="outlined"
                 label="Last Name"
                 id="last"
-                value={this.state.internalAuthor.last || ""}
+                value={this.state.author.last || ""}
                 onChange={this.handleChange}
               />
             </Box>
@@ -92,7 +85,7 @@ export default class Author extends Component {
                   variant="outlined"
                   label="Name"
                   id="full"
-                  value={this.state.internalAuthor.full || ""}
+                  value={this.state.author.full || ""}
                   onChange={this.handleChange}
                 />
             </Box>
