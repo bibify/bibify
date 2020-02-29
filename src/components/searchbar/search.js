@@ -40,7 +40,8 @@ export function getWebsite(url) {
           response.data.publisher_formatted = formatPublisher(response.data.publisher);
           response.data.authors_formatted = formatAuthors(response.data.authors);
           response.data.authors = convertAuthors(response.data.authors);
-          done([response.data]);
+          response.data.accessDate = response.data.accessDate || new Date().toISOString().slice(0,10);
+         done([response.data]);
         })
     } catch (err) {
       error(err);
