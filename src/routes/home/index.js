@@ -9,7 +9,8 @@ import Header from '../../components/header';
 import CiteCard from '../../components/citecard';
 import ResultCard from '../../components/resultcard';
 
-import { Divider, Collapse } from '@material-ui/core';
+import { Divider, Collapse, Snackbar } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { Grid } from '@material-ui/core';
 
 export default class Home extends Component {
@@ -23,7 +24,12 @@ export default class Home extends Component {
     results: [
     ],
     selectedResult: {authors: []},
-    style: {}
+    style: {},
+    banner: {
+      show: false,
+      severity: "info",
+      message: ""
+    }
   }
 
   /** Gets fired when we change tabs.
@@ -47,6 +53,22 @@ export default class Home extends Component {
   }
 
   onSelectChange = (result) => {
+    // Check authors; display warning for unknown
+    for (let author of result.authors) {
+      if (author.type != "Person" && this.state.headerData.tabName == "Book") {
+        this.showBanner("warning", "We're not sure whether these authors are people or organizations. Please double check them and change them if needed.");
+        break;
+      }
+    }
+
+    // Check attributes; display warning for unknown fields
+    let importantKeys = ["title", "publisher", "date"];
+    for (let key of importantKeys) {
+      if (Object.keys(result).indexOf(key) == -1) {
+        this.showBanner("warning", "We're missing some important info about this source. We can still fill in the citation, but please fill in the information if you can.");
+      }
+    }
+
     this.setState({selectedResult: result});
   }
 
@@ -94,6 +116,10 @@ export default class Home extends Component {
     });
   }
 
+  showBanner = (severity, message) => {
+    this.setState({banner: {show: true, severity: severity, message: message}});
+  }
+
 	render() {
     let author_components = [];
     for (let [index, author] of (this.state.selectedResult.authors.entries())) {
@@ -108,6 +134,14 @@ export default class Home extends Component {
 
 		return (
       <div id="home" class={style.home}>
+        <Collapse in={this.state.banner.show}>
+          <Alert
+            onClose={() => {this.setState({banner: {show: false, severity: "info", message: ""}})}}
+            severity={this.state.banner.severity}
+          >
+            {this.state.banner.message}
+          </Alert>
+        </Collapse>
 				<Header onTabChange={this.navCallback} />
         <Grid container direction="row" justify="center">
           <Grid
@@ -123,7 +157,11 @@ export default class Home extends Component {
           >
             <h1>Bibify - Cite {this.state.headerData.tabName} in MLA Format</h1>
             <Collapse in={this.state.headerData.supported} className={style.citecard}>
-              <SearchBar onResults={this.onResults} type={this.state.headerData.tabName.toLowerCase()} />
+              <SearchBar
+                onResults={this.onResults}
+                type={this.state.headerData.tabName.toLowerCase()}
+                showBanner={this.showBanner}
+              />
             </Collapse>
             <br />
             <Collapse in={this.state.showResults} className={style.citecard}>
@@ -137,6 +175,7 @@ export default class Home extends Component {
               text="Your citation will appear here..."
               result={this.state.selectedResult}
               onStyleChange={this.onStyleChange}
+              showBanner={this.showBanner}
             />
             <br />
             <form className={style.citecard}>

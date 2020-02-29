@@ -28,6 +28,7 @@ export default class SearchBar extends Component {
           })
           .catch((error) => {
             console.log("Error was", error);
+            this.props.showBanner("error", "Failed to get results: " + error + ". Please try again later.");
           });
         break;
       case "website":
@@ -39,6 +40,7 @@ export default class SearchBar extends Component {
           })
           .catch((error) => {
             console.log("Error was", error);
+            this.props.showBanner("error", "Failed to get results: " + error + ". Please try again later.");
           });
         break;
     }

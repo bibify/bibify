@@ -26,6 +26,7 @@ export default class CiteCard extends Component {
       })
       .catch((err) => {
         console.log("Styles fetch failed:", err);
+        this.props.showBanner("error", "Error: Could not fetch styles list; backend is probably down. Try again later.")
       });
   }
 
