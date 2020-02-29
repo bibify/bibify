@@ -20,26 +20,27 @@
     "build/*"
   ],
   "devDependencies": {
-    "enzyme": "^3.10.0",
+    "enzyme": "^3.11.0",
     "enzyme-adapter-preact-pure": "^2.0.0",
-    "eslint": "^6.0.1",
+    "eslint": "^6.8.0",
     "eslint-config-synacor": "^3.0.4",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.9.0",
     "jest-preset-preact": "^1.0.0",
     "per-env": "^1.0.2",
-    "preact-cli": "^3.0.0-rc.6",
+    "preact-cli": "^3.0.0-rc.9",
     "preact-render-spy": "^1.2.1",
-    "serve": "^11.1.0"
+    "serve": "^11.3.0"
   },
   "dependencies": {
-    "@material-ui/core": "^4.7.2",
-    "@material-ui/icons": "^4.5.1",
-    "axios": "^0.19.0",
-    "preact": "^10.0.1",
+    "@material-ui/core": "^4.9.4",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.44",
+    "axios": "^0.19.2",
+    "preact": "^10.3.2",
     "preact-head": "^1.0.3",
-    "preact-render-to-string": "^5.1.0",
-    "preact-router": "^3.0.0",
+    "preact-render-to-string": "^5.1.4",
+    "preact-router": "^3.2.1",
     "qs": "^6.9.1"
   },
   "jest": {
