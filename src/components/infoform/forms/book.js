@@ -123,9 +123,9 @@ export class BookForm extends Component {
           fullWidth
           margin="dense"
           variant="outlined"
-          id="event-place"
+          id="publisher-place"
           label="Publisher Location"
-          value={this.state.data["event-place"] || ""}
+          value={this.state.data["publisher-place"] || ""}
           onChange={this.onChange}
         />
         <TextField
