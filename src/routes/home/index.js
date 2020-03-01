@@ -44,6 +44,12 @@ export default class Home extends Component {
       headerData: { value: value, tabName: tabName, supported: supported},
       showResults: false
     });
+
+    if (value > 1 && value != 3) {
+      this.showBanner("warning", "Warning: " + tabName + " is in beta. Use with caution.");
+    } else if (this.state.banner.severity != "error") {
+      this.closeBanner();
+    }
   };
 
   onInfoChange = (info) => {
@@ -52,6 +58,7 @@ export default class Home extends Component {
 
   onResults = (results) => {
     this.setState({showResults: true, results: results, selectedResult: results[0]});
+    this.closeBanner();
   }
 
   onSelectChange = (result) => {
@@ -122,7 +129,13 @@ export default class Home extends Component {
   }
 
   showBanner = (severity, message) => {
+    // Don't override errors unless you're trying to put up another error
+    if (this.state.banner.severity == "error" && severity != "error") return;
     this.setState({banner: {show: true, severity: severity, message: message}});
+  }
+
+  closeBanner = () => {
+    this.setState({banner: {show: false, severity: "info", message: ""}});
   }
 
 	render() {
@@ -141,7 +154,7 @@ export default class Home extends Component {
       <div id="home" class={style.home}>
         <Collapse in={this.state.banner.show}>
           <Alert
-            onClose={() => {this.setState({banner: {show: false, severity: "info", message: ""}})}}
+            onClose={this.closeBanner}
             severity={this.state.banner.severity}
           >
             {this.state.banner.message}

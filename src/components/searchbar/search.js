@@ -43,6 +43,9 @@ export function getWebsite(url) {
           response.data.accessDate = response.data.accessDate || new Date().toISOString().slice(0,10);
          done([response.data]);
         })
+        .catch((err) => {
+          error(err);
+        })
     } catch (err) {
       error(err);
     }

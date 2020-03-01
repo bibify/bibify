@@ -28,10 +28,17 @@ export default class SearchBar extends Component {
           })
           .catch((error) => {
             console.log("Error was", error);
+            this.setState({progress: false});
             this.props.showBanner("error", "Failed to get results: " + error + ". Please try again later.");
           });
         break;
       case "webpage":
+        // Make sure URL is valid
+        if (!(this.state.query.startsWith("http://") || this.state.query.startsWith("https://"))) {
+          this.props.showBanner("error", "URL must start with http:// or https://.");
+          break;
+        }
+
         search.getWebsite(this.state.query)
           .then((results) => {
             this.setState({progress: false});
@@ -40,6 +47,7 @@ export default class SearchBar extends Component {
           })
           .catch((error) => {
             console.log("Error was", error);
+            this.setState({progress: false});
             this.props.showBanner("error", "Failed to get results: " + error + ". Please try again later.");
           });
         break;
@@ -48,6 +56,12 @@ export default class SearchBar extends Component {
 
   onQueryChange = (e) => {
     this.setState({query: e.target.value});
+  }
+
+  handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      this.getResults();
+    }
   }
 
   render() {
@@ -61,6 +75,7 @@ export default class SearchBar extends Component {
             label="Enter a book/journal/report/URL to autofill..."
             value={this.state.query}
             onChange={this.onQueryChange}
+            onKeyPress={this.handleKeyPress}
           />
         </Box>
         <Box ml="-5px">

@@ -34,14 +34,19 @@ export default class CiteCard extends Component {
     // Default, empty result field has only empty authors list - ignore "empty" results
     if (Object.keys(result).length <= 1) return;
     console.log("sss", result);
+    let sendResult = {...result};
+    sendResult.style = style;
+    sendResult.thumbnail = "";
 
     this.setState({progress: true});
-    axios.get(config.bibserverURL + "/api/cite?" + qs.stringify(Object.assign({style: style}, result), { format : 'RFC3986' }))
+    axios.get(config.bibserverURL + "/api/cite?" + qs.stringify(sendResult, { format : 'RFC3986' }))
     .then((res) => {
       console.log(res.data);
-      this.setState({citation: res.data, progress: false})
+      this.setState({citation: res.data, progress: false});
     }).catch((err) => {
-      console.log("Fetch failed:", err)
+      console.log("Fetch failed:", err);
+      this.setState({progress: false});
+      this.props.showBanner("error", "Error: couldn't get citation. Try reloading.");
     })
   }
 

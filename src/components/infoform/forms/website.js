@@ -22,7 +22,7 @@ export class WebsiteForm extends Component {
         let fields = res.data;
         for (let i = 0; i < fields.length; i++) {
           console.log("field", fields[i].field);
-          if (["title", "publisher", "websiteTitle", "date", "accessDate", "url"].indexOf(fields[i].field) != -1) {
+          if (["title", "publisher", "container-title", "date", "accessDate", "url"].indexOf(fields[i].field) != -1) {
             fields.splice(i, 1);
             i--;
           }
