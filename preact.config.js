@@ -6,6 +6,5 @@ export default {
       tls: 'empty',
       dns: 'empty'
     };
-    console.log(config);
   }
 }

@@ -25,23 +25,23 @@
     "eslint": "^6.8.0",
     "eslint-config-synacor": "^3.0.4",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^24.9.0",
+    "jest": "^25.4.0",
     "jest-preset-preact": "^1.0.0",
     "per-env": "^1.0.2",
-    "preact-cli": "^3.0.0-rc.9",
+    "preact-cli": "^3.0.0-rc.10",
     "preact-render-spy": "^1.2.1",
     "serve": "^11.3.0"
   },
   "dependencies": {
-    "@material-ui/core": "^4.9.4",
+    "@material-ui/core": "^4.9.11",
     "@material-ui/icons": "^4.9.1",
-    "@material-ui/lab": "^4.0.0-alpha.44",
+    "@material-ui/lab": "^4.0.0-alpha.50",
     "axios": "^0.19.2",
-    "preact": "^10.3.2",
+    "preact": "^10.4.0",
     "preact-head": "^1.0.3",
-    "preact-render-to-string": "^5.1.4",
+    "preact-render-to-string": "^5.1.6",
     "preact-router": "^3.2.1",
-    "qs": "^6.9.1"
+    "qs": "^6.9.3"
   },
   "jest": {
     "preset": "jest-preset-preact",
