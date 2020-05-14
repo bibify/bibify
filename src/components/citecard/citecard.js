@@ -24,8 +24,13 @@ export default class CiteCard extends Component {
         this.setState({style: res.data.citationStyles[0]});
       })
       .catch((err) => {
-        console.log("Styles fetch failed:", err);
-        this.props.showBanner("error", "Error: Could not fetch styles list; backend is probably down. Try again later.")
+        if (process.env.BIBSERVERURL.startswith("http")) {
+            console.error("Cannot call plain HTTP backend from HTTPS frontend. Switch your backend URL to HTTPS.")
+            this.props.showBanner("error", "Error: Cannot call plain HTTP backend from HTTPS frontend; the site is not properly set up. Contact the site administrator.");
+        } else {
+            console.error("Styles fetch failed:", err);
+            this.props.showBanner("error", "Error: Could not fetch styles list; backend is probably down. Try again later.");
+        }
       });
   }
 
