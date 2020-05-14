@@ -3,7 +3,6 @@ import { Divider, TextField, Collapse, Button } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import axios from 'axios';
 
-import config from '../../../../config.json';
 import style from '../style';
 
 export class BookForm extends Component {
@@ -16,7 +15,7 @@ export class BookForm extends Component {
   constructor(props) {
     super(props);
 
-    axios.get(config.bibserverURL + "/api/fields/book")
+    axios.get(process.env.BIBSERVERURL + "/api/fields/book")
       .then((res) => {
         let fields = res.data;
         for (let i = 0; i < fields.length; i++) {

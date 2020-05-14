@@ -1,11 +1,12 @@
 FROM node:latest as builder
 LABEL maintainer="vwangsf@gmail.com"
 
+ENV BIBSERVERURL="https://api.bibify.org"
+
 COPY . /bibify
 WORKDIR /bibify
 
 RUN npm i
-RUN sed -i 's+http://localhost:8000+http://bibserver.matthew-cloud.com:8080+g' config.json
 RUN npm run build
 
 FROM nginx:latest

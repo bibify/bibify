@@ -3,7 +3,6 @@ import { Divider, TextField } from '@material-ui/core';
 import axios from 'axios';
 
 import { BookForm, WebsiteForm, DefaultForm } from './forms';
-import config from '../../../config.json';
 import style from './style';
 
 export default class InfoForm extends Component {

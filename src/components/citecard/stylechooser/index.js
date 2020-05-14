@@ -1,7 +1,6 @@
 import { h, Component } from 'preact';
 import axios from 'axios';
 import qs from 'qs';
-import config from '../../../../config.json';
 import { CircularProgress } from '@material-ui/core';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { Box, TextField, Button, Divider, Typography } from '@material-ui/core';
@@ -18,7 +17,7 @@ export default class StyleChooser extends Component {
 
   constructor() {
     super();
-    axios.get(config.bibserverURL + "/api/styles")
+    axios.get(process.env.BIBSERVERURL + "/api/styles")
       .then((res) => {
         this.setState({styles: res.data.citationStyles});
       })
@@ -29,7 +28,7 @@ export default class StyleChooser extends Component {
 
   search = () => {
     this.setState({progress: true});
-    axios.get(config.bibserverURL + "/api/styles/search?" + qs.stringify({q: this.state.query, limit: 20}, { format : 'RFC3986' }))
+    axios.get(process.env.BIBSERVERURL + "/api/styles/search?" + qs.stringify({q: this.state.query, limit: 20}, { format : 'RFC3986' }))
     .then((res) => {
       this.setState({styles: res.data, progress: false})
     }).catch((err) => {

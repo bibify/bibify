@@ -1,10 +1,7 @@
-export default {
-  webpack(config, env, helpers, options) {
-    config.node = {
-      fs: 'empty',
-      net: 'empty',
-      tls: 'empty',
-      dns: 'empty'
-    };
-  }
+import webpack from 'webpack';
+
+module.exports = function(config) {
+  config.plugins.push(
+    new webpack.EnvironmentPlugin({'BIBSERVERURL': 'http://localhost:8000'})
+  );
 }

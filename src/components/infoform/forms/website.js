@@ -3,7 +3,6 @@ import { Divider, TextField, Collapse, Button } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import axios from 'axios';
 
-import config from '../../../../config.json';
 import style from '../style';
 
 export class WebsiteForm extends Component {
@@ -17,7 +16,7 @@ export class WebsiteForm extends Component {
     super(props);
 
     console.log(this.props);
-    axios.get(config.bibserverURL + "/api/fields/webpage")
+    axios.get(process.env.BIBSERVERURL + "/api/fields/webpage")
       .then((res) => {
         let fields = res.data;
         for (let i = 0; i < fields.length; i++) {

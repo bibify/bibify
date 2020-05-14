@@ -2,7 +2,6 @@ import { h, Component } from 'preact';
 import axios from 'axios';
 import qs from 'qs';
 import BaseCiteCard from './basecitecard';
-import config from '../../../config.json';
 import {CircularProgress} from '@material-ui/core';
 
 
@@ -17,8 +16,8 @@ export default class CiteCard extends Component {
 
   constructor() {
     super();
-    console.log(config.bibserverURL + "/api/styles");
-    axios.get(config.bibserverURL + "/api/styles")
+    console.log(process.env.BIBSERVERURL + "/api/styles");
+    axios.get(process.env.BIBSERVERURL + "/api/styles")
       .then((res) => {
         console.log("sty", res.data.citationStyles);
         this.setState({styles: res.data.citationStyles});
@@ -39,7 +38,7 @@ export default class CiteCard extends Component {
     sendResult.thumbnail = "";
 
     this.setState({progress: true});
-    axios.get(config.bibserverURL + "/api/cite?" + qs.stringify(sendResult, { format : 'RFC3986' }))
+    axios.get(process.env.BIBSERVERURL + "/api/cite?" + qs.stringify(sendResult, { format : 'RFC3986' }))
     .then((res) => {
       console.log(res.data);
       this.setState({citation: res.data, progress: false});

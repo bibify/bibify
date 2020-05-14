@@ -1,10 +1,9 @@
 import * as axios from 'axios';
-import config from '../../../config.json';
 
 export function searchBook(query) {
   return new Promise((done, error) => {
     try {
-      let apiURL = config["bibserverURL"];
+      let apiURL = process.env.BIBSERVERURL;
       apiURL += "/api/books?q=" + encodeURIComponent(query).replace(/%20/g, "+");
 
       axios.get(apiURL)
@@ -32,7 +31,7 @@ export function searchBook(query) {
 export function getWebsite(url) {
   return new Promise((done, error) => {
     try {
-      let apiURL = config["bibserverURL"];
+      let apiURL = process.env.BIBSERVERURL;
       apiURL += "/api/website?url=" + encodeURIComponent(url).replace(/%20/g, "+");
 
       axios.get(apiURL)
