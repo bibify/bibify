@@ -17,8 +17,8 @@ import { Grid } from '@material-ui/core';
 export default class Home extends Component {
   state = {
     headerData: {
-      value: 0,
-      tabName: "Book",
+      value: 1,
+      tabName: "Webpage",
       supported: true
     },
     showResults: false,

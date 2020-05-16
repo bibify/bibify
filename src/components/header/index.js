@@ -6,9 +6,9 @@ import style from './style';
 
 export default class Header extends Component {
   state = {
-    value: 0,
-    tabValue: 0,
-    tabName: "Book",
+    value: 1,
+    tabValue: 1,
+    tabName: "Webpage",
     supported: true,
     overflowTab: {
       name: "Other...",
