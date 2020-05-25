@@ -12,21 +12,28 @@ export default class App extends Component {
 	 *	@param {string} event.url	The newly routed URL
 	 */
   state = {
-    headerData: { value: 0, tabName: "Book" }
+    headerData: { value: 0, tabName: "Book" },
+    show: false
   }
 
 	handleRoute = e => {
 		this.currentUrl = e.url;
 	};
 
+  componentDidMount() {
+    // Quick fix for FOUC; ideally we'd get MUI to
+    // load properly but it looks like it doesn't like
+    // preact
+    this.setState({ show: true });
+  }
 
 	render() {
-		return (
+		return ( this.state.show ?
 			<div id="app">
 				<Router onChange={this.handleRoute}>
 					<Home path="/" />
 				</Router>
-			</div>
+      </div> : <div />
 		);
 	}
 }
