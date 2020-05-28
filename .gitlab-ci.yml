@@ -31,7 +31,7 @@ deploy to s3:
     - npm i
     - npm run build
     - apt update
-    - apt install python3-pip
+    - apt install python3-pip -y
     - pip3 install awscli
     - aws s3 cp ./build/ s3://$S3_BUCKET_NAME/ --recursive 
   only:
