@@ -18,7 +18,7 @@ test build:
   - merge_requests
   - master
 
-build-docker-image:
+build-docker-image-staging:
   stage: build-staging
   image:
     name: gcr.io/kaniko-project/executor:debug-v0.15.0
@@ -41,7 +41,7 @@ build-docker-image:
   only:
     - tags
     
-deploy to s3:
+deploy to s3 staging:
   stage: staging
   image: node:latest
   script:
