@@ -1,19 +1,37 @@
 variables: 
-  BIBSERVERURL: "https://api.bibify.org"
   AWS_DEFAULT_REGION: us-west-1
 stages:
   - test
+  - build-staging
+  - staging
   - build
   - deploy
+
 test build:
   stage: test
   image: node:latest
   script:
+  - export BIBSERVERURL="https://api.bibify.org"
   - npm i
   - npm run build
+  only: 
+  - merge_requests
+  - master
+
+build-docker-image:
+  stage: build-staging
+  image:
+    name: gcr.io/kaniko-project/executor:debug-v0.15.0
+    entrypoint: [""]
+  script:
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+  only:
+    - master
 
 build-docker-image:
   stage: build
+  when: manual
   image:
     name: gcr.io/kaniko-project/executor:debug-v0.15.0
     entrypoint: [""]
@@ -22,12 +40,27 @@ build-docker-image:
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
   only:
     - tags
+    
+deploy to s3:
+  stage: staging
+  image: node:latest
+  script:
+    - export BIBSERVERURL="https://stagingapi.bibify.org"
+    - npm i
+    - npm run build
+    - apt update
+    - apt install python3-pip -y
+    - pip3 install awscli
+    - aws s3 cp ./build/ s3://staging-bibify/ --recursive 
+  only:
     - master
 
 deploy to s3:
   stage: deploy
   image: node:latest
+  when: manual
   script:
+    - export BIBSERVERURL="https://api.bibify.org"
     - npm i
     - npm run build
     - apt update
