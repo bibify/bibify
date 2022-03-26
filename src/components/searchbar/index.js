@@ -3,8 +3,7 @@ import { Button } from '@material-ui/core';
 import { Box } from '@material-ui/core';
 import { TextField } from '@material-ui/core';
 import { CircularProgress } from '@material-ui/core';
-import { Search } from '@material-ui/icons';
-
+import { Search, Clear} from '@material-ui/icons';
 import style from './style';
 import * as search from './search';
 
@@ -13,6 +12,8 @@ export default class SearchBar extends Component {
     query: "",
     progress: false
   }
+
+  
 
   getResults = async () => {
     console.log("Getting results");
@@ -54,6 +55,13 @@ export default class SearchBar extends Component {
     }
   }
 
+  clearResult=()=>{
+    console.log('clearing result')
+    this.setState({query: ''});
+  }
+
+
+
   onQueryChange = (e) => {
     this.setState({query: e.target.value});
   }
@@ -78,7 +86,7 @@ export default class SearchBar extends Component {
             onKeyPress={this.handleKeyPress}
           />
         </Box>
-        <Box ml="-5px">
+        <Box ml="-4px">
           <Button
             className={style.fullbtn}
             variant="contained"
@@ -91,6 +99,18 @@ export default class SearchBar extends Component {
               <CircularProgress /> :
               <Search />
             }
+          </Button>
+        </Box>
+        <Box ml="-5px">
+        <Button
+            className={style.fullbtn}
+            variant="contained"
+            edge="start"
+            color="default"
+            disableElevation
+            onClick ={this.clearResult}
+          >
+              <Clear />
           </Button>
         </Box>
       </Box>
